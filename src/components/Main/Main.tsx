@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './Main.module.css';
-import TodoListHeader from './TodoListHeader/TodoListHeader';
-import Routes from "../common/Routes/Routes";
-import {Provider} from "react-redux";
+import TodoListHeader from '../TodoListHeader/TodoListHeader';
+import Routes from "../Routes/Routes";
 
 
 const Main = () => {
