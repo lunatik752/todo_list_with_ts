@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Main.module.css';
-import TodoListHeader from '../TodoListHeader';
+import TodoListHeader from './TodoListHeader/TodoListHeader';
+import Routes from "../common/Routes/Routes";
+import {Provider} from "react-redux";
 
 
 const Main = () => {
@@ -8,9 +10,7 @@ const Main = () => {
         <div className={styles.appWrapper}>
             <div className={styles.container}>
                 <TodoListHeader/>
-                <div className={styles.body}>
-                    <div className={styles.test}>1</div>
-                </div>
+                <Routes/>
             </div>
         </div>
     );

@@ -1,0 +1,68 @@
+.loginWrapper {
+    height: 350px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(-45deg, #65b7f6, #0000ff);
+    border: black;
+}
+
+.title {
+    font-size: 22px;
+    color: #f1cb3f;
+}
+
+.loginForm {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loginForm input {
+    font-size: 16px;
+}
+
+.recoverPassword a {
+    color: #f1cb3f;
+    text-decoration: none;
+}
+.recoverPassword a:hover {
+    color: #de3f40;
+}
+
+
+
+.rememberMe {
+    width: 80%;
+    display: flex;
+    color: #f1cb3f;
+
+
+
+}
+
+.rememberMe input {
+    margin: auto 10px;
+
+    vertical-align: middle;
+}
+
+.signUp {
+    margin-top: 20px;
+    color: #f1cb3f;
+}
+
+.signUp a {
+    color: #f1cb3f;
+
+
+}
+
+.signUp a:hover {
+    color: #de3f40;
+}
