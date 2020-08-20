@@ -1,19 +1,28 @@
 import React from 'react';
-import {Provider} from "react-redux";
-import Main from './components/Main/Main';
-import {HashRouter} from "react-router-dom";
-import store from './redux/store';
+import './App.css';
 
-
-const App = () => {
+function App() {
     return (
-        <HashRouter>
-            <Provider store={store}>
-                <Main/>
-             </Provider>
-        </HashRouter>
+        <div className="App">
+            <div>
+                <h3>What to learn</h3>
+                <div>
+                    <input/>
+                    <button>+</button>
+                </div>
+                <ul>
+                    <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
+                    <li><input type="checkbox" checked={true}/> <span>JS</span></li>
+                    <li><input type="checkbox" checked={false}/> <span>React</span></li>
+                </ul>
+                <div>
+                    <button>All</button>
+                    <button>Active</button>
+                    <button>Completed</button>
+                </div>
+            </div>
+        </div>
     );
 }
-
 
 export default App;
