@@ -33,8 +33,6 @@ function App() {
         }
     }
 
-
-
     let [filter, setFilter] = useState<FilterValuesType>('all');
 
     let tasksForTodoList = tasks;
@@ -58,7 +56,9 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
-                      changeStatus={changeStatus}/>
+                      changeStatus={changeStatus}
+                      filter={filter}
+            />
         </div>
     );
 }
