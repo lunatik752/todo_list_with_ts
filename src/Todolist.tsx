@@ -11,10 +11,11 @@ type PropsType = {
     title: string,
     tasks: Array<TaskType>,
     removeTask: (id: string) => void,
-    changeFilter: (value: FilterValuesType) => void,
+    changeFilter: (value: FilterValuesType, todoListId: string) => void,
     addTask: (title: string) => void,
     changeStatus: (id: string, isDone: boolean) => void,
-    filter: string
+    filter: string,
+    todoListId: string
 }
 
 export function TodoList(props: PropsType) {
@@ -43,15 +44,15 @@ export function TodoList(props: PropsType) {
     }
 
     const onAllClickHandler = () => {
-        props.changeFilter('all')
+        props.changeFilter('all', props.todoListId)
     }
 
     const onActiveClickHandler = () => {
-        props.changeFilter('active')
+        props.changeFilter('active', props.todoListId)
     }
 
     const onCompletedClickHandler = () => {
-        props.changeFilter('completed')
+        props.changeFilter('completed', props.todoListId)
     }
 
     let inputClassName = error ? 'error' : ''
