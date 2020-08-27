@@ -5,7 +5,7 @@ type AddItemPropsType = {
     addItem: (title: string) => void
 }
 
-function AddItem(props: AddItemPropsType) {
+export function AddItem(props: AddItemPropsType) {
 
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null)
