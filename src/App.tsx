@@ -87,20 +87,21 @@ function App() {
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-            let todoListTasks = tasks[todoListId];
-            let task = todoListTasks.find(task => task.id === id);
-            if (task) {
-                task.title = newTitle;
-                setTasks({...tasks})
-            }
+        let todoListTasks = tasks[todoListId];
+        let task = todoListTasks.find(task => task.id === id);
+        if (task) {
+            task.title = newTitle;
+            setTasks({...tasks})
         }
-        function changeTodoListTitle(newTitle: string, todoListId: string) {
-            const todoList = todoLists.find(tl => tl.id === todoListId);
-            if (todoList) {
-                todoList.title = newTitle;
-                setTodoLists([...todoLists])
-            }
+    }
+
+    function changeTodoListTitle(newTitle: string, todoListId: string) {
+        const todoList = todoLists.find(tl => tl.id === todoListId);
+        if (todoList) {
+            todoList.title = newTitle;
+            setTodoLists([...todoLists])
         }
+    }
 
 
     return (
