@@ -2,6 +2,9 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
 import {AddItem} from "./AddItemsForm";
 import {EditableSpan} from "./EditableSpan";
+import {IconButton} from "@material-ui/core";
+import {Delete} from '@material-ui/icons';
+
 
 export  type TaskType = {
     id: string,
@@ -54,7 +57,9 @@ export function TodoList(props: PropsType) {
     return <div>
         <div className={'todoListTitle'}>
             <h3><EditableSpan title={props.title} onChangeTitle={changeTodoListTitle}/></h3>
-            <button onClick={removeTodoList}>х</button>
+            <IconButton onClick={removeTodoList}>
+                <Delete />
+            </IconButton>
         </div>
         <AddItem addItem={addTask}/>
         <ul>
@@ -77,7 +82,9 @@ export function TodoList(props: PropsType) {
                            onChange={onChangeStatusHandler}
                     />
                     <EditableSpan title={task.title} onChangeTitle={onChangeTitleHandler}/>
-                    <button onClick={onClickHandler}>x</button>
+                    <IconButton onClick={onClickHandler}>
+                        <Delete />
+                    </IconButton>
                 </li>
             })}
         </ul>
