@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
 import {AddItem} from "./AddItemsForm";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton} from "@material-ui/core";
+import {IconButton, Button} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 
 
@@ -89,15 +89,22 @@ export function TodoList(props: PropsType) {
             })}
         </ul>
         <div>
-            <button className={props.filter === 'all' ? 'active-filter' : ''}
-                    onClick={onAllClickHandler}>All
-            </button>
-            <button className={props.filter === 'active' ? 'active-filter' : ''}
-                    onClick={onActiveClickHandler}>Active
-            </button>
-            <button className={props.filter === 'completed' ? 'active-filter' : ''}
-                    onClick={onCompletedClickHandler}>Completed
-            </button>
+            <Button className={props.filter === 'all' ? 'active-filter' : ''}
+                    onClick={onAllClickHandler}
+                    color='default'
+                    variant='contained'
+            >All
+            </Button>
+            <Button className={props.filter === 'active' ? 'active-filter' : ''}
+                    onClick={onActiveClickHandler}
+                    color='primary'
+            >Active
+            </Button>
+            <Button className={props.filter === 'completed' ? 'active-filter' : ''}
+                    onClick={onCompletedClickHandler}
+                    color='secondary'
+            >Completed
+            </Button>
         </div>
     </div>
 }
