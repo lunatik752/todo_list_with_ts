@@ -1,27 +1,27 @@
-.App {
-    display: flex;
-    justify-content: space-around;
-}
+/*.App {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*}*/
 
-.error {
-    border: red 1px solid;
-}
+/*.error {*/
+/*    border: red 1px solid;*/
+/*}*/
 
-.error-message {
-    color: red;
-}
+/*.error-message {*/
+/*    color: red;*/
+/*}*/
 
-.active-filter {
-    background-color: aquamarine;
-}
+/*.active-filter {*/
+/*    background-color: aquamarine;*/
+/*}*/
 
-.isDone {
-    opacity: 0.5;
-}
+/*.isDone {*/
+/*    opacity: 0.5;*/
+/*}*/
 
 .todoListTitle {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
