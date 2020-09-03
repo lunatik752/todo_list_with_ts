@@ -7,7 +7,11 @@ import {v1} from "uuid";
 // export const CHANGE_TODOLIST_FILTER = 'todoList/reducer/CHANGE-TODOLIST-FILTER'
 
 
-type ActionType = RemoveTodoListActionType | AddTodoListActionType | ChangeTodoListTitleActionType | ChangeTodoListFilterActionType
+type ActionType =
+    RemoveTodoListActionType
+    | AddTodoListActionType
+    | ChangeTodoListTitleActionType
+    | ChangeTodoListFilterActionType
 
 
 export type RemoveTodoListActionType = {
@@ -31,7 +35,6 @@ export type ChangeTodoListFilterActionType = {
     id: string
     filter: FilterValuesType
 }
-
 
 
 export const todoListReducer = (state: Array<TodoListType>, action: ActionType) => {
@@ -58,11 +61,39 @@ export const todoListReducer = (state: Array<TodoListType>, action: ActionType) 
             if (todoList) {
                 todoList.filter = action.filter;
             }
-
             return [...state]
-    }
+        }
         default:
             throw new Error("I don't understand this type")
     }
 }
 
+export const RemoveTodoListAC = (todoListId: string): RemoveTodoListActionType => {
+    return {
+        type: 'REMOVE-TODOLIST',
+        id: todoListId
+    }
+}
+
+export const AddTodoListAC = (newTitle: string): AddTodoListActionType => {
+    return {
+        type: 'ADD-TODOLIST',
+        title: newTitle
+    }
+}
+
+export const ChangeTodoListTitleAC = (newTitle: string, todoListId: string): ChangeTodoListTitleActionType => {
+    return {
+        type: 'CHANGE-TODOLIST-TITLE',
+        title: newTitle,
+        id: todoListId
+    }
+}
+
+export const ChangeTodoListFilterAC = (newFilter: FilterValuesType, todoListId: string): ChangeTodoListFilterActionType => {
+    return {
+        type: 'CHANGE-TODOLIST-FILTER',
+        filter: newFilter,
+        id: todoListId
+    }
+}
