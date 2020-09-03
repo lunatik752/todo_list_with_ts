@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string,
     filter: FilterValuesType
@@ -78,7 +78,8 @@ function App() {
 
     function removeTodoList(id: string) {
         setTodoLists(todoLists.filter(tl => tl.id !== id));
-        delete tasks[id]
+        delete tasks[id];
+        setTasks({...tasks})
     }
 
     function addTodoList(title: string) {
