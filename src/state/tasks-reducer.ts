@@ -3,7 +3,7 @@ import {v1} from "uuid";
 
 
 
-type ActionType = RemoveTaskActionType | AddTaskActionType
+type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType
 
 
 
@@ -16,6 +16,12 @@ export type RemoveTaskActionType = {
 export type AddTaskActionType = {
     type: 'ADD-TASK',
     title: string,
+    todoListId: string
+}
+export type ChangeTaskStatusActionType = {
+    type: 'CHANGE-TASK-STATUS',
+    id: string,
+    isDone: boolean,
     todoListId: string
 }
 
@@ -33,6 +39,15 @@ export const tasksReducer = (state: TasksStateType, action: ActionType) => {
             state[action.todoListId] = [task, ...todoListTasks]
             return {...state}
         }
+            case 'CHANGE-TASK-STATUS': {
+                let todoListTasks = state[action.todoListId];
+                let task = todoListTasks.find(task => task.id === action.id);
+                if (task) {
+                    task.isDone = action.isDone;
+                }
+                return {...state}
+            }
+
         default:
             throw new Error("I don't understand this type")
     }
@@ -50,6 +65,15 @@ export const addTaskAC = (title: string, todoListId: string): AddTaskActionType 
     return {
         type: 'ADD-TASK',
         title: title,
+        todoListId: todoListId
+    }
+}
+
+export const changeTaskStatusAC = (taskId: string, isDone: boolean, todoListId: string): ChangeTaskStatusActionType => {
+    return {
+        type: 'CHANGE-TASK-STATUS',
+        id: taskId,
+        isDone: isDone,
         todoListId: todoListId
     }
 }
