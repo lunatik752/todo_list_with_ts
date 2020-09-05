@@ -1,9 +1,10 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
+import { AddTodoListActionType } from "./todoList-reducer";
 
 
 
-type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
+type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodoListActionType
 
 
 
@@ -36,18 +37,18 @@ export type ChangeTaskTitleActionType = {
 export const tasksReducer = (state: TasksStateType, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TASK': {
-            let todoListTasks = state[action.todoListId];
+            let todoListTasks = {...state}[action.todoListId];
             state[action.todoListId] = todoListTasks.filter(task => task.id !== action.id)
             return {...state}
         }
         case "ADD-TASK": {
             let task = {id: v1(), title: action.title, isDone: false};
-            let todoListTasks = state[action.todoListId];
+            let todoListTasks = {...state}[action.todoListId];
             state[action.todoListId] = [task, ...todoListTasks]
             return {...state}
         }
             case 'CHANGE-TASK-STATUS': {
-                let todoListTasks = state[action.todoListId];
+                let todoListTasks = {...state}[action.todoListId];
                 let task = todoListTasks.find(task => task.id === action.id);
                 if (task) {
                     task.isDone = action.isDone;
@@ -55,12 +56,17 @@ export const tasksReducer = (state: TasksStateType, action: ActionType) => {
                 return {...state}
             }
         case "CHANGE-TASK-TITLE":{
-            let todoListTasks = state[action.todoListId];
+            let todoListTasks = {...state}[action.todoListId];
             let task = todoListTasks.find(task => task.id === action.id);
             if (task) {
                 task.title = action.title;
             }
             return {...state}
+        }
+        case "ADD-TODOLIST": {
+          const  stateCopy = {...state}
+            stateCopy[v1()] = []
+            return stateCopy
         }
         default:
             throw new Error("I don't understand this type")
@@ -99,3 +105,5 @@ export const changeTaskTitleAC = (taskId: string, newTitle: string, todoListId: 
         todoListId: todoListId
     }
 }
+
+
