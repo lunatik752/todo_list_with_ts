@@ -65,7 +65,7 @@ export const tasksReducer = (state: TasksStateType, action: ActionType) => {
         }
         case "ADD-TODOLIST": {
           const  stateCopy = {...state}
-            stateCopy[v1()] = []
+            stateCopy[action.todoListId] = []
             return stateCopy
         }
         default:
