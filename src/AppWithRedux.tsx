@@ -1,8 +1,7 @@
-import React, {useReducer, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {TaskType, TodoList} from "./Todolist";
-import {v1} from "uuid";
-import {AppBar, IconButton, Toolbar, Typography, Button} from "@material-ui/core";
+import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
 import AddItemForm from "./AddItemsForm";
@@ -12,9 +11,11 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
-    removeTodoListAC, todoListReducer,
+    removeTodoListAC,
 } from "./state/todoList-reducer";
-import {tasksReducer, removeTaskAC, addTaskAC, changeTaskStatusAC, changeTaskTitleAC} from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {AppRootStateType} from "./state/store";
+import {useDispatch, useSelector} from 'react-redux';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -32,68 +33,42 @@ export type TasksStateType = {
 function AppWithRedux() {
 
 
-    let todoListId1 = v1();
-    let todoListId2 = v1();
-
-
-    let [todoLists, dispatchToTodoLists] = useReducer(todoListReducer, [
-        {id: todoListId1, title: 'What to learn', filter: 'all'},
-        {id: todoListId2, title: 'What to bue', filter: 'all'},
-    ])
-
-    let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
-        [todoListId1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: true}
-        ],
-        [todoListId2]: [
-            {id: v1(), title: 'Milk', isDone: true},
-            {id: v1(), title: 'React Book', isDone: true}
-        ]
-    })
+const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists);
+const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
+const dispatch = useDispatch()
 
 
     function removeTask(id: string, todoListId: string) {
-        let action = removeTaskAC(id, todoListId);
-        dispatchToTasks(action)
+        dispatch(removeTaskAC(id, todoListId))
     }
 
     function addTask(title: string, todoListId: string) {
-        let action = addTaskAC(title, todoListId);
-        dispatchToTasks(action)
+        dispatch(addTaskAC(title, todoListId))
     }
 
     function changeStatus(id: string, isDone: boolean, todoListId: string) {
-        let action = changeTaskStatusAC(id, isDone, todoListId);
-        dispatchToTasks(action)
+        dispatch(changeTaskStatusAC(id, isDone, todoListId))
     }
 
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
-        let action = changeTodoListFilterAC(value, todoListId)
-        dispatchToTodoLists(action)
+        dispatch(changeTodoListFilterAC(value, todoListId))
     }
 
     function removeTodoList(id: string) {
-        let action = removeTodoListAC(id);
-        dispatchToTodoLists(action)
-
+        dispatch(removeTodoListAC(id))
     }
 
     function addTodoList(title: string) {
-        const action = addTodoListAC(title);
-        dispatchToTasks(action);
-        dispatchToTodoLists(action)
+        dispatch(addTodoListAC(title));
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = changeTaskTitleAC(id, newTitle, todoListId);
-        dispatchToTasks(action)
+        dispatch(changeTaskTitleAC(id, newTitle, todoListId))
     }
 
     function changeTodoListTitle(newTitle: string, todoListId: string) {
-        const action = changeTodoListTitleAC(newTitle, todoListId);
-        dispatchToTodoLists(action)
+        dispatch(changeTodoListTitleAC(newTitle, todoListId))
     }
 
 
@@ -127,8 +102,7 @@ function AppWithRedux() {
                                 tasksForTodoList = allTodoListTask.filter(task => task.isDone)
                             }
 
-                            return <Grid item>
-
+                            return <Grid  key={tl.id}  item>
                                 <Paper style={{padding: "10px", backgroundColor: '#cfe8fc'}}>
                                     <TodoList
                                         key={tl.id}
