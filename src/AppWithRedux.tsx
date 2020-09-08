@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, TodoList} from "./Todolist";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import AddItemForm from "./AddItemsForm";
+import {AddItemForm} from "./AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
@@ -59,9 +59,9 @@ const dispatch = useDispatch()
         dispatch(removeTodoListAC(id))
     }
 
-    function addTodoList(title: string) {
+    const addTodoList = useCallback( (title: string) => {
         dispatch(addTodoListAC(title));
-    }
+    }, [])
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
         dispatch(changeTaskTitleAC(id, newTitle, todoListId))

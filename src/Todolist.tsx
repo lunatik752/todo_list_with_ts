@@ -1,6 +1,6 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValuesType} from "./App";
-import AddItemForm from "./AddItemsForm";
+import {AddItemForm} from "./AddItemsForm";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton, Button} from "@material-ui/core";
 import { Delete} from '@material-ui/icons';
@@ -30,9 +30,9 @@ type PropsType = {
 
 export function TodoList(props: PropsType) {
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.todoListId);
-    }
+    }, [])
 
     const onAllClickHandler = () => {
         props.changeFilter('all', props.todoListId)

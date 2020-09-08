@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {AppBar, IconButton, Toolbar, Typography, Button} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import AddItemForm from "./AddItemsForm";
+import {AddItemForm} from "./AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
