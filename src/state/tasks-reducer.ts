@@ -1,11 +1,16 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodoListActionType, RemoveTodoListActionType} from "./todoList-reducer";
+import {TodoListType} from "../AppWithReducer";
 
 
-
-type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodoListActionType | RemoveTodoListActionType
-
+type ActionType =
+    RemoveTaskActionType
+    | AddTaskActionType
+    | ChangeTaskStatusActionType
+    | ChangeTaskTitleActionType
+    | AddTodoListActionType
+    | RemoveTodoListActionType
 
 
 export type RemoveTaskActionType = {
@@ -33,8 +38,9 @@ export type ChangeTaskTitleActionType = {
     todoListId: string
 }
 
+const initialState: TasksStateType = {};
 
-export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             let todoListTasks = {...state}[action.todoListId];
@@ -47,15 +53,15 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
             state[action.todoListId] = [task, ...todoListTasks]
             return {...state}
         }
-            case 'CHANGE-TASK-STATUS': {
-                let todoListTasks = {...state}[action.todoListId];
-                let task = todoListTasks.find(task => task.id === action.id);
-                if (task) {
-                    task.isDone = action.isDone;
-                }
-                return {...state}
+        case 'CHANGE-TASK-STATUS': {
+            let todoListTasks = {...state}[action.todoListId];
+            let task = todoListTasks.find(task => task.id === action.id);
+            if (task) {
+                task.isDone = action.isDone;
             }
-        case "CHANGE-TASK-TITLE":{
+            return {...state}
+        }
+        case "CHANGE-TASK-TITLE": {
             let todoListTasks = {...state}[action.todoListId];
             let task = todoListTasks.find(task => task.id === action.id);
             if (task) {
@@ -64,17 +70,17 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
             return {...state}
         }
         case "ADD-TODOLIST": {
-          const  stateCopy = {...state}
+            const stateCopy = {...state}
             stateCopy[action.todoListId] = []
             return stateCopy
         }
         case "REMOVE-TODOLIST": {
-            const  stateCopy = {...state};
+            const stateCopy = {...state};
             delete stateCopy[action.id];
             return stateCopy
         }
         default:
-            throw new Error("I don't understand this type")
+            return state
     }
 }
 
