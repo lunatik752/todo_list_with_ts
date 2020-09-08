@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker'
-import AppWithReducer from './AppWithReducer';
+import AppWithRedux from "./AppWithRedux";
 
 
 ReactDOM.render(
-    <AppWithReducer/>,
+    <AppWithRedux/>,
     document.getElementById('root')
 );
 
