@@ -39,24 +39,24 @@ const dispatch = useDispatch()
 
     const removeTask = useCallback(function (id: string, todoListId: string) {
         dispatch(removeTaskAC(id, todoListId))
-    },[])
+    },[dispatch])
 
     const addTask = useCallback(function (title: string, todoListId: string) {
         dispatch(addTaskAC(title, todoListId))
-    },[])
+    },[dispatch])
 
     const changeStatus = useCallback(function(id: string, isDone: boolean, todoListId: string) {
         dispatch(changeTaskStatusAC(id, isDone, todoListId))
-    }, [])
+    }, [dispatch])
 
 
     const changeFilter = useCallback(function (value: FilterValuesType, todoListId: string) {
         dispatch(changeTodoListFilterAC(value, todoListId))
-    }, [])
+    }, [dispatch])
 
     const removeTodoList = useCallback(function (id: string) {
         dispatch(removeTodoListAC(id))
-    }, [])
+    }, [dispatch])
 
     const addTodoList = useCallback( function (title: string)  {
         dispatch(addTodoListAC(title));
@@ -64,11 +64,11 @@ const dispatch = useDispatch()
 
     const changeTitle = useCallback(function (id: string, newTitle: string, todoListId: string) {
         dispatch(changeTaskTitleAC(id, newTitle, todoListId))
-    }, [])
+    }, [dispatch])
 
     const changeTodoListTitle = useCallback(function (newTitle: string, todoListId: string) {
         dispatch(changeTodoListTitleAC(newTitle, todoListId))
-    }, [])
+    }, [dispatch])
 
 
     return (
