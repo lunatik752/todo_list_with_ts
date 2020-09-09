@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
@@ -24,9 +24,9 @@ export const Task = React.memo(function (props: PropsTaskType) {
         let newIsDoneValue = e.currentTarget.checked;
         props.changeStatus(props.task.id, newIsDoneValue, props.todoListId)
     }
-    const onChangeTitleHandler = (newtTitle: string) => {
+    const onChangeTitleHandler = useCallback((newtTitle: string) => {
         props.changeTaskTitle(props.task.id, newtTitle, props.todoListId)
-    }
+    }, [props])
 
 
         return <div key={props.task.id}
