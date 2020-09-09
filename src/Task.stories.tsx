@@ -3,12 +3,13 @@ import {Task} from "./Task";
 import {TaskType} from "./Todolist";
 import {v1} from "uuid";
 import {action} from "@storybook/addon-actions";
+import {Meta} from "@storybook/react/types-6-0";
 
 
 export default {
     title: 'Task Stories',
     component: Task
-}
+} as Meta
 
 const task: Array<TaskType> = [{
     id: v1(),

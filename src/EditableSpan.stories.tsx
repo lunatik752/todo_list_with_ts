@@ -1,12 +1,13 @@
 import React from "react";
 import {action} from "@storybook/addon-actions";
 import {EditableSpan} from "./EditableSpan";
+import {Meta} from "@storybook/react/types-6-0";
 
 
 export default {
-    title: 'EditableSpan Stories',
+    title: 'Example/EditableSpan',
     component: EditableSpan
-}
+} as Meta
 
 
 const onChangeTitleCallback = action('Value changed');
