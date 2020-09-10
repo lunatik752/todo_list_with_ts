@@ -13,12 +13,12 @@ export default {
 
 const task: Array<TaskType> = [{
     id: v1(),
-    isDone: true,
+    isDone: false,
     title: 'CSS'
 },
     {
         id: v1(),
-        isDone: false,
+        isDone: true,
         title: 'HTML'
     }
 ]
