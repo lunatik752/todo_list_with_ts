@@ -5,7 +5,7 @@ import {Meta} from "@storybook/react/types-6-0";
 
 
 export default  {
-    title: 'AppWithRedux Stories',
+    title: 'Example/AppWithRedux Stories',
     component: AppWithRedux,
     decorators: [ReduxStoreProviderDecorator]
 } as Meta

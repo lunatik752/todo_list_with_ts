@@ -7,7 +7,7 @@ import {Meta} from "@storybook/react/types-6-0";
 
 
 export default {
-    title: 'Task Stories',
+    title: 'Example/Task Stories',
     component: Task
 } as Meta
 

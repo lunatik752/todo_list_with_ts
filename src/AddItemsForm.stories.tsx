@@ -5,7 +5,7 @@ import {Meta} from "@storybook/react/types-6-0";
 
 
 export default  {
-    title: 'AddItemForm Stories',
+    title: 'Example/AddItemForm Stories',
     component: AddItemForm
 } as Meta
 
