@@ -17,31 +17,32 @@ const settings = {
 export const GetTodoLists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-  axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings).then((res) => {
-          debugger;
-          setState(res.data);
-      }
-  )
+        todoListAPI.getTodoLists().then((res) => {
+                debugger;
+                setState(res.data);
+            }
+        )
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
 }
+
 export const CreateTodoList = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: "pamparan"}, settings).then( (res) => {
+        todoListAPI.createTodoList('newTodoList').then((res) => {
             debugger;
             setState(res.data);
-        } )
+        })
     }, [])
     return <div> {JSON.stringify(state)}</div>
 }
+
 export const DeleteTodoList = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-
-        const todolistId = '3feda5d8-0a30-49db-9173-c59889c24b78';
-        axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, settings).then( (res) => {
+        const todoListId = '3feda5d8-0a30-49db-9173-c59889c24b78';
+        todoListAPI.deleteTodoList(todoListId).then((res) => {
             setState(res.data);
         })
 
