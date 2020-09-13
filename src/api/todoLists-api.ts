@@ -21,7 +21,7 @@ const instance = axios.create({
     }
 })
 
-export const todoListApi = {
+export const todoListsApi = {
     updateTodoList(todolistId: string, title: string) {
         const promise =
             instance.put<ResponseType<{}>>(`todo-lists/${todolistId}`, {title: title})

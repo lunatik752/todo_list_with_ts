@@ -1,22 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import {todoListApi} from "../api/todoList-api";
+import {todoListsApi} from "../api/todoLists-api";
 
 export default {
-    title: 'API'
+    title: 'TodoListsAPI'
 }
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': '90bf912e-ca5a-4b96-9037-858f400fe7a5'
-    }
-
-}
 
 export const GetTodoLists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoListApi.getTodoLists().then((res) => {
+        todoListsApi.getTodoLists().then((res) => {
                 debugger;
                 setState(res.data);
             }
@@ -29,7 +22,7 @@ export const GetTodoLists = () => {
 export const CreateTodoList = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoListApi.createTodoList('newTodoList').then((res) => {
+        todoListsApi.createTodoList('newTodoList').then((res) => {
             debugger;
             setState(res.data);
         })
@@ -41,7 +34,7 @@ export const DeleteTodoList = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todoListId = 'a67a4438-dba1-4fd2-91fe-6cbe2ddebc04';
-        todoListApi.deleteTodoList(todoListId).then((res) => {
+        todoListsApi.deleteTodoList(todoListId).then((res) => {
             setState(res.data);
         })
 
@@ -56,7 +49,7 @@ export const UpdateTodoListTitle = () => {
     useEffect(() => {
 
         const todoListId = '6d994397-bbb4-4d24-be92-7042278f1435';
-        todoListApi.updateTodoList(todoListId, 'SOME NEW TITLE')
+        todoListsApi.updateTodoList(todoListId, 'SOME NEW TITLE')
             .then((res) => {
                 setState(res.data)
             })
