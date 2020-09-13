@@ -32,20 +32,23 @@ export const CreateTask = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
-// export const DeleteTodoList = () => {
-//     const [state, setState] = useState<any>(null)
-//     useEffect(() => {
-//         const todoListId = 'a67a4438-dba1-4fd2-91fe-6cbe2ddebc04';
-//         todoListApi.deleteTodoList(todoListId).then((res) => {
-//             setState(res.data);
-//         })
-//
-//         // здесь мы будем делать запрос и ответ закидывать в стейт.
-//         // который в виде строки будем отображать в div-ке
-//     }, [])
-//
-//     return <div> {JSON.stringify(state)}</div>
-// }
+export const DeleteTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todoListId = 'c4a42836-7577-4320-b6a1-a9b8ab855de9';
+        const taskId = '8d12baa4-ccc4-417f-baf8-7310f86c3025';
+        tasksAPI.deleteTask(todoListId, taskId).then((res) => {
+            setState(res.data);
+        })
+
+        // здесь мы будем делать запрос и ответ закидывать в стейт.
+        // который в виде строки будем отображать в div-ке
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+
 // export const UpdateTodoListTitle = () => {
 //     const [state, setState] = useState<any>(null)
 //     useEffect(() => {
