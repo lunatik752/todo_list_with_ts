@@ -51,7 +51,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             let task = {
                 id: v1(),
                 title: action.title,
-                status: TaskStatuses.Completed,
+                status: TaskStatuses.New,
                 todoListId: action.todoListId,
                 addedDate: '',
                 deadline: '',

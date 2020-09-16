@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {tasksAPI} from "../api/tasks-api";
 
 
 export default {
     title: 'TasksAPI'
 }
-
 
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
