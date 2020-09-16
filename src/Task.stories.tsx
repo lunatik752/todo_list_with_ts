@@ -1,9 +1,9 @@
 import React from "react";
 import {Task} from "./Task";
-import {TaskType} from "./Todolist";
 import {v1} from "uuid";
 import {action} from "@storybook/addon-actions";
 import {Meta} from "@storybook/react/types-6-0";
+import {TaskPriorities, TaskStatuses, TaskType} from "./api/tasks-api";
 
 
 export default {
@@ -13,13 +13,27 @@ export default {
 
 const task: Array<TaskType> = [{
     id: v1(),
-    isDone: false,
-    title: 'CSS'
+    status: TaskStatuses.New,
+    title: 'CSS',
+    todoListId: "todoListId1",
+    addedDate: '',
+    deadline: '',
+    description: '',
+    order: 0,
+    priority: TaskPriorities.Hi,
+    startDate: ''
 },
     {
         id: v1(),
-        isDone: true,
-        title: 'HTML'
+        title: 'HTML',
+        status: TaskStatuses.Completed,
+        todoListId: "todoListId1",
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: TaskPriorities.Hi,
+        startDate: ''
     }
 ]
 const removeTaskCallback = action('Remove Button inside Task clicked');
