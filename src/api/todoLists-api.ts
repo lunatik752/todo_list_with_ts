@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     addedDate: string
     order: number
