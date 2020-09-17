@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {TodoList} from "./Todolist";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
@@ -20,6 +19,7 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./
 import {AppRootStateType} from "./state/store";
 import {useDispatch, useSelector} from 'react-redux';
 import {TaskStatuses, TaskType} from "./api/tasks-api";
+import {TodoList} from "./TodoList";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
