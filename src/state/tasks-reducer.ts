@@ -160,13 +160,22 @@ export const changeTaskTitleAC = (taskId: string, newTitle: string, todoListId: 
 
 // Thunk
 
-export const fetchTasksTC = (todolistId: string) => {
+export const fetchTasksTC = (todoListId: string) => {
     return (dispatch: Dispatch) => {
-        tasksAPI.getTasks(todolistId)
+        tasksAPI.getTasks(todoListId)
             .then((res) => {
                 const tasks = res.data.items
-                const action = setTasksAC(tasks, todolistId)
+                const action = setTasksAC(tasks, todoListId)
                 dispatch(action)
+            })
+    }
+}
+
+export const removeTasksTC = ( taskId:string, todoListId: string) => {
+    return (dispatch: Dispatch) => {
+        tasksAPI.deleteTask(todoListId, taskId)
+            .then((res) => {
+                dispatch(removeTaskAC(taskId, todoListId))
             })
     }
 }
