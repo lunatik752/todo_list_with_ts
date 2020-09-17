@@ -9,10 +9,10 @@ import Paper from "@material-ui/core/Paper";
 import {
     addTodoListAC,
     changeTodoListFilterAC,
-    changeTodoListTitleAC,
+    changeTodoListTitleTC,
     fetchTodoListsTC,
     FilterValuesType,
-    removeTodoListsTC,
+    removeTodoListTC,
     TodoListDomainType,
 } from "./state/todoList-reducer";
 import {addTaskTC, changeTaskTitleAC, removeTasksTC, updateTaskTC} from "./state/tasks-reducer";
@@ -51,7 +51,7 @@ function AppWithRedux() {
     }, [dispatch])
 
     const removeTodoList = useCallback(function (id: string) {
-        dispatch(removeTodoListsTC(id))
+        dispatch(removeTodoListTC(id))
     }, [dispatch])
 
     const addTodoList = useCallback(function (title: string) {
@@ -63,7 +63,7 @@ function AppWithRedux() {
     }, [dispatch])
 
     const changeTodoListTitle = useCallback(function (newTitle: string, todoListId: string) {
-        dispatch(changeTodoListTitleAC(newTitle, todoListId))
+        dispatch(changeTodoListTitleTC(newTitle, todoListId))
     }, [dispatch])
 
 
