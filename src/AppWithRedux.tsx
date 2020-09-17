@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodoList} from "./Todolist";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
@@ -10,8 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import {
     addTodoListAC,
     changeTodoListFilterAC,
-    changeTodoListTitleAC, FilterValuesType,
-    removeTodoListAC, TodoListDomainType,
+    changeTodoListTitleAC,
+    fetchTodoListsTC,
+    FilterValuesType,
+    removeTodoListAC,
+    TodoListDomainType,
 } from "./state/todoList-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {AppRootStateType} from "./state/store";
@@ -62,6 +65,11 @@ const dispatch = useDispatch()
     const changeTodoListTitle = useCallback(function (newTitle: string, todoListId: string) {
         dispatch(changeTodoListTitleAC(newTitle, todoListId))
     }, [dispatch])
+
+
+    useEffect(() => {
+       dispatch(fetchTodoListsTC())
+    }, [])
 
 
     return (

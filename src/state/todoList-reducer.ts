@@ -1,5 +1,6 @@
 import {v1} from "uuid";
-import {TodoListType} from "../api/todoLists-api";
+import {todoListsApi, TodoListType} from "../api/todoLists-api";
+import { Dispatch } from "redux";
 
 
 type ActionType =
@@ -120,5 +121,17 @@ export const changeTodoListFilterAC = (newFilter: FilterValuesType, todoListId: 
         type: 'CHANGE-TODOLIST-FILTER',
         filter: newFilter,
         id: todoListId
+    }
+}
+
+
+// Thunk
+
+export const fetchTodoListsTC = () => {
+   return (dispatch: Dispatch) => {
+        todoListsApi.getTodoLists()
+            .then((res) => {
+                dispatch(setTodoListsAC(res.data))
+            })
     }
 }
