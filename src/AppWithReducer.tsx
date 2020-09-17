@@ -12,11 +12,11 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
+    FilterValuesType,
     removeTodoListAC,
     todoListReducer,
-    FilterValuesType,
 } from "./state/todoList-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "./state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/tasks-api";
 
 export type TasksStateType = {
@@ -70,7 +70,7 @@ function AppWithReducer() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        let action = changeTaskStatusAC(id, status, todoListId);
+        let action = updateTaskAC(id, {status}, todoListId);
         dispatchToTasks(action)
     }
 
@@ -98,7 +98,7 @@ function AppWithReducer() {
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = changeTaskTitleAC(id, newTitle, todoListId);
+        let action = updateTaskAC(id, {title: newTitle}, todoListId);
         dispatchToTasks(action)
     }
 

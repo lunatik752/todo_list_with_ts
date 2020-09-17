@@ -2,8 +2,7 @@ import {todoListsApi, TodoListType} from "../api/todoLists-api";
 import {Dispatch} from "redux";
 
 
-type ActionType =
-    RemoveTodoListActionType
+type ActionType = RemoveTodoListActionType
     | AddTodoListActionType
     | ChangeTodoListTitleActionType
     | ChangeTodoListFilterActionType
