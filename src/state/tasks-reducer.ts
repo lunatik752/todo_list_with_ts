@@ -1,9 +1,7 @@
 import {TasksStateType} from "../App";
-import {v1} from "uuid";
 import {AddTodoListActionType, RemoveTodoListActionType, SetTodoListsActionType} from "./todoList-reducer";
-import {TaskPriorities, tasksAPI, TaskStatuses, TaskType} from "../api/tasks-api";
+import {tasksAPI, TaskStatuses, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
-import {todoListsApi} from "../api/todoLists-api";
 
 
 type ActionType =
@@ -18,27 +16,26 @@ type ActionType =
 
 
 export type RemoveTaskActionType = {
-    type: 'REMOVE-TASK',
-    id: string,
+    type: 'REMOVE-TASK'
+    id: string
     todoListId: string
 }
 
 export type AddTaskActionType = {
-    type: 'ADD-TASK',
-    title: string,
-    todoListId: string
+    type: 'ADD-TASK'
+    task: TaskType
 }
 export type ChangeTaskStatusActionType = {
-    type: 'CHANGE-TASK-STATUS',
-    id: string,
-    status: TaskStatuses,
+    type: 'CHANGE-TASK-STATUS'
+    id: string
+    status: TaskStatuses
     todoListId: string
 }
 
 export type ChangeTaskTitleActionType = {
-    type: 'CHANGE-TASK-TITLE',
-    id: string,
-    title: string,
+    type: 'CHANGE-TASK-TITLE'
+    id: string
+    title: string
     todoListId: string
 }
 
@@ -47,32 +44,22 @@ const initialState: TasksStateType = {};
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case "SET-TASKS": {
-            const copyState = {...state}
-            copyState[action.todoListId] = action.tasks
-            return copyState
+            const stateCopy = {...state}
+            stateCopy[action.todoListId] = action.tasks
+            return stateCopy
         }
-
         case 'REMOVE-TASK': {
             let todoListTasks = {...state}[action.todoListId];
             state[action.todoListId] = todoListTasks.filter(task => task.id !== action.id)
             return {...state}
         }
         case "ADD-TASK": {
-            let task = {
-                id: v1(),
-                title: action.title,
-                status: TaskStatuses.New,
-                todoListId: action.todoListId,
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: TaskPriorities.Hi,
-                startDate: ''
-            };
-            let todoListTasks = {...state}[action.todoListId];
-            state[action.todoListId] = [task, ...todoListTasks]
-            return {...state}
+            debugger
+            const stateCopy = {...state}
+            const newTask = action.task
+            const tasks = stateCopy[newTask.todoListId]
+            stateCopy[newTask.todoListId] = [newTask, ...tasks]
+            return stateCopy
         }
         case 'CHANGE-TASK-STATUS': {
             let todoListTasks = state[action.todoListId];
@@ -132,12 +119,8 @@ export const removeTaskAC = (taskId: string, todoListId: string): RemoveTaskActi
     }
 }
 
-export const addTaskAC = (title: string, todoListId: string): AddTaskActionType => {
-    return {
-        type: 'ADD-TASK',
-        title: title,
-        todoListId: todoListId
-    }
+export const addTaskAC = (task: TaskType): AddTaskActionType => {
+    return {type: 'ADD-TASK', task}
 }
 
 export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todoListId: string): ChangeTaskStatusActionType => {
@@ -171,11 +154,21 @@ export const fetchTasksTC = (todoListId: string) => {
     }
 }
 
-export const removeTasksTC = ( taskId:string, todoListId: string) => {
+export const removeTasksTC = (taskId: string, todoListId: string) => {
     return (dispatch: Dispatch) => {
         tasksAPI.deleteTask(todoListId, taskId)
             .then((res) => {
                 dispatch(removeTaskAC(taskId, todoListId))
+            })
+    }
+}
+
+
+export const addTaskTC = (todoListId: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        tasksAPI.createTask(todoListId, title)
+            .then((res) => {
+                dispatch(addTaskAC(res.data.data.item))
             })
     }
 }

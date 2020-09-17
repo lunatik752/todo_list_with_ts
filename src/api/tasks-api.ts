@@ -65,7 +65,7 @@ export const tasksAPI = {
     },
     createTask(todoListId: string, title: string) {
         const promise =
-            instance.post(`${todoListId}/tasks`, {title: title})
+            instance.post<ResponseType<{item: TaskType }>>(`${todoListId}/tasks`, {title})
         return promise
     },
     deleteTask(todoListId: string, taskId: string) {

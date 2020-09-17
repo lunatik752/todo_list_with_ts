@@ -3,8 +3,8 @@ import {
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    tasksReducer,
-    setTasksAC
+    setTasksAC,
+    tasksReducer
 } from './tasks-reducer';
 import {TasksStateType} from '../App';
 import {addTodoListAC, removeTodoListAC, setTodoListsAC} from "./todoList-reducer";
@@ -41,7 +41,18 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC("juice", "todoListId2");
+    const action = addTaskAC({
+        title: 'juice',
+        status: TaskStatuses.New,
+        id: 'id exist',
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: TaskPriorities.Hi,
+        startDate: '',
+        todoListId: "todoListId2"
+    });
 
     const endState = tasksReducer(startState, action)
 

@@ -15,7 +15,7 @@ import {
     removeTodoListAC,
     TodoListDomainType,
 } from "./state/todoList-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, removeTasksTC} from "./state/tasks-reducer";
+import {addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTasksTC} from "./state/tasks-reducer";
 import {AppRootStateType} from "./state/store";
 import {useDispatch, useSelector} from 'react-redux';
 import {TaskStatuses, TaskType} from "./api/tasks-api";
@@ -28,20 +28,20 @@ export type TasksStateType = {
 
 function AppWithRedux() {
 
-const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
-const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
-const dispatch = useDispatch()
+    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
+    const dispatch = useDispatch()
 
 
     const removeTask = useCallback(function (id: string, todoListId: string) {
         dispatch(removeTasksTC(id, todoListId))
-    },[dispatch])
+    }, [dispatch])
 
-    const addTask = useCallback(function (title: string, todoListId: string) {
-        dispatch(addTaskAC(title, todoListId))
-    },[dispatch])
+    const addTask = useCallback(function (todoListId: string, title: string) {
+        dispatch(addTaskTC(todoListId, title))
+    }, [dispatch])
 
-    const changeStatus = useCallback(function(id: string, status: TaskStatuses, todoListId: string) {
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoListId: string) {
         dispatch(changeTaskStatusAC(id, status, todoListId))
     }, [dispatch])
 
@@ -54,7 +54,7 @@ const dispatch = useDispatch()
         dispatch(removeTodoListAC(id))
     }, [dispatch])
 
-    const addTodoList = useCallback( function (title: string)  {
+    const addTodoList = useCallback(function (title: string) {
         dispatch(addTodoListAC(title));
     }, [dispatch])
 
@@ -68,9 +68,8 @@ const dispatch = useDispatch()
 
 
     useEffect(() => {
-       dispatch(fetchTodoListsTC())
+        dispatch(fetchTodoListsTC())
     }, [])
-
 
     return (
         <div className="App">
@@ -95,7 +94,7 @@ const dispatch = useDispatch()
 
                             let tasksForTodoList = tasks[tl.id];
 
-                            return <Grid  key={tl.id}  item>
+                            return <Grid key={tl.id} item>
                                 <Paper style={{padding: "10px", backgroundColor: '#cfe8fc'}}>
                                     <TodoList
                                         key={tl.id}

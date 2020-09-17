@@ -5,9 +5,9 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/tasks-api";
-import {fetchTodoListsTC, FilterValuesType} from "./state/todoList-reducer";
+import {FilterValuesType} from "./state/todoList-reducer";
 import {useDispatch} from "react-redux";
-import { fetchTasksTC } from "./state/tasks-reducer";
+import {fetchTasksTC} from "./state/tasks-reducer";
 
 
 type PropsType = {
@@ -15,7 +15,7 @@ type PropsType = {
     tasks: Array<TaskType>,
     removeTask: (id: string, todoListId: string) => void,
     changeFilter: (value: FilterValuesType, todoListId: string) => void,
-    addTask: (title: string, todoListId: string) => void,
+    addTask: (todoListId: string, title: string) => void,
     changeStatus: (id: string, status: TaskStatuses, todoListId: string) => void,
     filter: string,
     todoListId: string,
@@ -29,7 +29,7 @@ export const TodoList = React.memo(function (props: PropsType) {
         console.log("Todolist called")
 
         const addTask = useCallback((title: string) => {
-            props.addTask(title, props.todoListId);
+            props.addTask(props.todoListId, title);
         }, [props.addTask, props.todoListId])
 
         const onAllClickHandler = useCallback(() => {
