@@ -2,6 +2,7 @@ import {TasksStateType} from "../App";
 import {AddTodoListActionType, RemoveTodoListActionType, SetTodoListsActionType} from "./todoList-reducer";
 import {tasksAPI, TaskStatuses, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
+import {AppRootStateType} from "./store";
 
 
 type ActionType =
@@ -173,6 +174,23 @@ export const addTaskTC = (todoListId: string, title: string) => {
     }
 }
 
+export const updateTaskTC = (taskId: string, status: TaskStatuses, todoListId: string) => {
+    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+        const task = getState().tasks[todoListId].find(t => t.id === taskId)
+        if (task) {
+            tasksAPI.updateTask(todoListId, taskId, {
+                title: task.title,
+                startDate: task.startDate,
+                priority: task.priority,
+                description: task.description,
+                deadline: task.deadline,
+                status: status
+            }).then((res) => {
+                dispatch(changeTaskStatusAC(taskId, status, todoListId))
+            })
+        }
+    }
+}
 
 
 
