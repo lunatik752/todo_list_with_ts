@@ -65,7 +65,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         }
         case 'CHANGE-TASK-STATUS': {
             let todoListTasks = state[action.todoListId];
-            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {...task, isDone: action.status} : task);
+            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {...task, status: action.status} : task);
             state[action.todoListId] = newTasksArray
             return {...state}
         }
