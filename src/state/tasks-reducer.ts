@@ -1,6 +1,6 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
-import {AddTodoListActionType, RemoveTodoListActionType} from "./todoList-reducer";
+import {AddTodoListActionType, RemoveTodoListActionType, SetTodoListsActionType} from "./todoList-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
 
@@ -11,6 +11,7 @@ type ActionType =
     | ChangeTaskTitleActionType
     | AddTodoListActionType
     | RemoveTodoListActionType
+    | SetTodoListsActionType
 
 
 export type RemoveTaskActionType = {
@@ -58,20 +59,27 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 description: '',
                 order: 0,
                 priority: TaskPriorities.Hi,
-                startDate: ''};
+                startDate: ''
+            };
             let todoListTasks = {...state}[action.todoListId];
             state[action.todoListId] = [task, ...todoListTasks]
             return {...state}
         }
         case 'CHANGE-TASK-STATUS': {
             let todoListTasks = state[action.todoListId];
-            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {...task, status: action.status} : task);
+            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {
+                ...task,
+                status: action.status
+            } : task);
             state[action.todoListId] = newTasksArray
             return {...state}
         }
         case "CHANGE-TASK-TITLE": {
             let todoListTasks = state[action.todoListId];
-            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {...task, title: action.title} : task);
+            let newTasksArray = todoListTasks.map(task => task.id === action.id ? {
+                ...task,
+                title: action.title
+            } : task);
             state[action.todoListId] = newTasksArray
             return {...state}
         }
@@ -83,6 +91,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case "REMOVE-TODOLIST": {
             const stateCopy = {...state};
             delete stateCopy[action.id];
+            return stateCopy
+        }
+        case "SET-TODOLISTS": {
+            const stateCopy = {...state};
+            action.todoLists.forEach(tl => {
+                stateCopy[tl.id] = [];
+            })
             return stateCopy
         }
         default:
