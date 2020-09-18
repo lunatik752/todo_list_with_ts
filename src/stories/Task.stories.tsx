@@ -1,9 +1,9 @@
 import React from "react";
-import {Task} from "./Task";
+import {Task} from "../components/task/Task";
 import {v1} from "uuid";
 import {action} from "@storybook/addon-actions";
 import {Meta} from "@storybook/react/types-6-0";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/tasks-api";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/tasks-api";
 
 
 export default {

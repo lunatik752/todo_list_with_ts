@@ -1,11 +1,11 @@
 import React, {useReducer} from 'react';
 import './App.css';
-import {TodoList} from "./TodoList";
+import {TodoList} from "../todoList/TodoList";
 import {v1} from "uuid";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import {AddItemForm} from "./AddItemsForm";
+import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
@@ -15,9 +15,9 @@ import {
     FilterValuesType,
     removeTodoListAC,
     todoListReducer,
-} from "./state/todoList-reducer";
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "./state/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/tasks-api";
+} from "../../state/todoList-reducer";
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>

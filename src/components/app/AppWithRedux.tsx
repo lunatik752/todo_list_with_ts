@@ -1,25 +1,26 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, IconButton, Toolbar, Typography, LinearProgress} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import {AddItemForm} from "./AddItemsForm";
+import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
+    addTodoListTC,
     changeTodoListFilterAC,
     changeTodoListTitleTC,
     fetchTodoListsTC,
     FilterValuesType,
     removeTodoListTC,
-    TodoListDomainType,
-    addTodoListTC
-} from "./state/todoList-reducer";
-import {addTaskTC, removeTasksTC, updateTaskTC} from "./state/tasks-reducer";
-import {AppRootStateType} from "./state/store";
+    TodoListDomainType
+} from "../../state/todoList-reducer";
+import {addTaskTC, removeTasksTC, updateTaskTC} from "../../state/tasks-reducer";
+import {AppRootStateType} from "../../state/store";
 import {useDispatch, useSelector} from 'react-redux';
-import {TaskStatuses, TaskType} from "./api/tasks-api";
-import {TodoList} from "./TodoList";
+import {TaskStatuses, TaskType} from "../../api/tasks-api";
+import {TodoList} from "../todoList/TodoList";
+import {RequestStatusType} from "../../state/app-reducer";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -30,6 +31,7 @@ function AppWithRedux() {
 
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const dispatch = useDispatch()
 
 
@@ -83,6 +85,7 @@ function AppWithRedux() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress color='secondary'/>}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>

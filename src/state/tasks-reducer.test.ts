@@ -5,7 +5,7 @@ import {
     setTasksAC,
     tasksReducer, updateTaskAC
 } from './tasks-reducer';
-import {TasksStateType} from '../App';
+import {TasksStateType} from '../components/app/App';
 import {addTodoListAC, removeTodoListAC, setTodoListsAC} from "./todoList-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
