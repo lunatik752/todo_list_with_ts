@@ -21,6 +21,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {TaskStatuses, TaskType} from "../../api/tasks-api";
 import {TodoList} from "../todoList/TodoList";
 import {RequestStatusType} from "../../state/app-reducer";
+import {ErrorSnackbar} from "../../common/Allert";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -75,6 +76,7 @@ function AppWithRedux() {
 
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">

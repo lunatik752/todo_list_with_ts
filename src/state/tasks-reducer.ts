@@ -49,7 +49,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {...state}
         }
         case "ADD-TASK": {
-            debugger
             const stateCopy = {...state}
             const newTask = action.task
             const tasks = stateCopy[newTask.todoListId]
