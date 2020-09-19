@@ -1,13 +1,15 @@
 import {todoListsApi, TodoListType} from "../api/todoLists-api";
 import {Dispatch} from "redux";
-import {setAppStatusAC} from "./app-reducer";
+import {setAppErrorAC, setAppStatusAC, SetAppStatusActionType, SetAppErrorActionType} from "./app-reducer";
 
 
-type ActionType = RemoveTodoListActionType
+type ActionsType = RemoveTodoListActionType
     | AddTodoListActionType
     | ChangeTodoListTitleActionType
     | ChangeTodoListFilterActionType
-| SetTodoListsActionType
+    | SetTodoListsActionType
+    | SetAppStatusActionType
+    | SetAppErrorActionType
 
 
 export type RemoveTodoListActionType = {
@@ -42,7 +44,7 @@ export type TodoListDomainType = TodoListType & {
 }
 
 
-export const todoListReducer = (state: Array<TodoListDomainType> = initialState, action: ActionType): Array<TodoListDomainType> => {
+export const todoListReducer = (state: Array<TodoListDomainType> = initialState, action: ActionsType): Array<TodoListDomainType> => {
     switch (action.type) {
         case 'SET-TODOLISTS': {
             return action.todoLists.map(tl => ({
@@ -117,8 +119,8 @@ export const changeTodoListFilterAC = (newFilter: FilterValuesType, todoListId: 
 // Thunk
 
 export const fetchTodoListsTC = () => {
-   return (dispatch: Dispatch) => {
-       dispatch(setAppStatusAC("loading"))
+    return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC("loading"))
         todoListsApi.getTodoLists()
             .then((res) => {
                 dispatch(setTodoListsAC(res.data))
@@ -150,12 +152,22 @@ export const changeTodoListTitleTC = (newTitle: string, todoListId: string) => {
 }
 
 export const addTodoListTC = (title: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<ActionsType>) => {
         dispatch(setAppStatusAC("loading"))
         todoListsApi.createTodoList(title)
-            .then((res) => {
-                dispatch(addTodoListAC(res.data.data.item))
-                dispatch(setAppStatusAC('succeeded'))
-            })
+            .then(res => {
+                    if (res.data.resultCode === 0) {
+                        dispatch(addTodoListAC(res.data.data.item))
+                        dispatch(setAppStatusAC('succeeded'))
+                    } else {
+                        if (res.data.messages.length) {
+                            dispatch(setAppErrorAC(res.data.messages[0]))
+                        } else {
+                            dispatch(setAppErrorAC('Some error occurred'))
+                        }
+                        dispatch(setAppStatusAC('failed'))
+                    }
+                }
+            )
     }
 }

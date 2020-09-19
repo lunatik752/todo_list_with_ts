@@ -145,7 +145,6 @@ export const removeTasksTC = (taskId: string, todoListId: string) => {
 
 export const addTaskTC = (todoListId: string, title: string ) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
-    debugger
     tasksAPI.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
