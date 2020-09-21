@@ -92,6 +92,7 @@ function AppWithReducer() {
             order: 0,
             addedDate: '',
             title: title,
+
         });
         dispatchToTasks(action);
         dispatchToTodoLists(action)
@@ -123,7 +124,7 @@ function AppWithReducer() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodoList}/>
+                    <AddItemForm addItem={addTodoList} disabled={false}/>
                 </Grid>
 
                 <Grid container spacing={3}>{
@@ -142,16 +143,14 @@ function AppWithReducer() {
 
                                 <Paper style={{padding: "10px", backgroundColor: '#cfe8fc'}}>
                                     <TodoList
+                                        todoList={tl}
                                         key={tl.id}
-                                        title={tl.title}
                                         entityStatus={tl.entityStatus}
                                         tasks={tasksForTodoList}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
                                         changeStatus={changeStatus}
-                                        filter={tl.filter}
-                                        todoListId={tl.id}
                                         removeTodoList={removeTodoList}
                                         changeTaskTitle={changeTitle}
                                         changeTodoListTitle={changeTodoListTitle}

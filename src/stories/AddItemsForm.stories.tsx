@@ -10,5 +10,10 @@ export default  {
 } as Meta
 
 export const AddItemFormBaseExample = (props: any) => {
-    return <AddItemForm addItem={action('Button inside from clicked')}/>
+    return <AddItemForm addItem={action('Button inside from clicked')} disabled={false}/>
+}
+
+
+export const AddItemFormDisabledExample = (props: any) => {
+    return <AddItemForm addItem={action('Button inside from clicked')} disabled={true}/>
 }

@@ -1,5 +1,10 @@
 import {TasksStateType} from "../components/app/App";
-import {AddTodoListActionType, RemoveTodoListActionType, SetTodoListsActionType} from "./todoList-reducer";
+import {
+    AddTodoListActionType,
+    changeTodoListEntityStatusAC, ChangeTodoListEntityStatusActionType,
+    RemoveTodoListActionType,
+    SetTodoListsActionType
+} from "./todoList-reducer";
 import {tasksAPI, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
@@ -16,7 +21,7 @@ type ActionsType =
     | SetTasksActionType
     | SetAppStatusActionType
     | SetAppErrorActionType
-
+    | ChangeTodoListEntityStatusActionType
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -145,12 +150,14 @@ export const removeTasksTC = (taskId: string, todoListId: string) => {
 
 export const addTaskTC = (todoListId: string, title: string ) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
+    dispatch(changeTodoListEntityStatusAC(todoListId,"loading"))
     tasksAPI.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
                 dispatch(addTaskAC(task))
                 dispatch(setAppStatusAC('succeeded'))
+                dispatch(changeTodoListEntityStatusAC(todoListId,"succeeded"))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setAppErrorAC(res.data.messages[0]))

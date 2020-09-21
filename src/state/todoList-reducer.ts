@@ -16,7 +16,7 @@ type ActionsType = RemoveTodoListActionType
     | SetTodoListsActionType
     | SetAppStatusActionType
     | SetAppErrorActionType
-| ChangeTodoListEntityStatusActionType
+    | ChangeTodoListEntityStatusActionType
 
 
 export type RemoveTodoListActionType = {
