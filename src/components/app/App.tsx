@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from '../../state/todoList-reducer';
+import {RequestStatusType} from "../../state/app-reducer";
 
 
 export type TasksStateType = {
@@ -24,8 +25,8 @@ function App() {
     let todoListId2 = v1();
 
     let [todoLists, setTodoLists] = useState<Array<TodoListDomainType>>([
-        {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: todoListId2, title: 'What to bue', filter: 'all', addedDate: '', order: 0,},
+        {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus:'succeeded'},
+        {id: todoListId2, title: 'What to bue', filter: 'all', addedDate: '', order: 0, entityStatus:'succeeded'},
     ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
@@ -79,7 +80,7 @@ function App() {
 
     function addTodoList(title: string) {
         let newTodoListId = v1();
-        let newTodoList: TodoListDomainType = {id: newTodoListId, title: title, filter: "all", addedDate: '', order: 0};
+        let newTodoList: TodoListDomainType = {id: newTodoListId, title: title, filter: "all", addedDate: '', order: 0, entityStatus:'succeeded'};
         setTodoLists([newTodoList, ...todoLists]);
         setTasks({
             ...tasks,
@@ -141,6 +142,7 @@ function App() {
                                     <TodoList
                                     key={tl.id}
                                     title={tl.title}
+                                    entityStatus={tl.entityStatus}
                                     tasks={tasksForTodoList}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}

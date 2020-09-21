@@ -31,9 +31,9 @@ function AppWithReducer() {
 
     let [todoLists, dispatchToTodoLists] = useReducer(todoListReducer, [
         {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '',
-            order: 0,},
+            order: 0, entityStatus:'succeeded'},
         {id: todoListId2, title: 'What to bue', filter: 'all', addedDate: '',
-            order: 0,},
+            order: 0, entityStatus:'succeeded'},
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
@@ -91,7 +91,7 @@ function AppWithReducer() {
             id: '123',
             order: 0,
             addedDate: '',
-            title: title
+            title: title,
         });
         dispatchToTasks(action);
         dispatchToTodoLists(action)
@@ -144,6 +144,7 @@ function AppWithReducer() {
                                     <TodoList
                                         key={tl.id}
                                         title={tl.title}
+                                        entityStatus={tl.entityStatus}
                                         tasks={tasksForTodoList}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}

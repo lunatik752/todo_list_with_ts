@@ -104,6 +104,7 @@ function AppWithRedux() {
                                     <TodoList
                                         key={tl.id}
                                         title={tl.title}
+                                        entityStatus={tl.entityStatus}
                                         tasks={tasksForTodoList}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
