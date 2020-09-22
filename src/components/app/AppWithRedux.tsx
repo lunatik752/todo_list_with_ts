@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {RequestStatusType} from "../../state/app-reducer";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {Login} from "../../features/Login";
+import {Login} from "../../features/login/Login";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>

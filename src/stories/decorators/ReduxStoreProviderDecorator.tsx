@@ -8,11 +8,13 @@ import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../../api/tasks-api";
 import {appReducer} from "../../state/app-reducer";
 import thunk from "redux-thunk";
+import {authReducer} from "../../features/login/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todoLists: todoListReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -33,6 +35,9 @@ const initialGlobalState: AppRootStateType = {
     app: {
         status: "idle",
         error: null
+    },
+    auth: {
+        isLoggedIn: false
     }
 };
 
