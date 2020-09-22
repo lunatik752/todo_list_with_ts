@@ -1,14 +1,14 @@
 import {TasksStateType} from "../components/app/App";
 import {
     AddTodoListActionType,
-    changeTodoListEntityStatusAC, ChangeTodoListEntityStatusActionType,
+    ChangeTodoListEntityStatusActionType,
     RemoveTodoListActionType,
     SetTodoListsActionType
 } from "./todoList-reducer";
 import {tasksAPI, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {setAppErrorAC, setAppStatusAC, SetAppStatusActionType, SetAppErrorActionType} from "./app-reducer";
+import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
 
 
 type ActionsType =
@@ -19,8 +19,6 @@ type ActionsType =
     | RemoveTodoListActionType
     | SetTodoListsActionType
     | SetTasksActionType
-    | SetAppStatusActionType
-    | SetAppErrorActionType
     | ChangeTodoListEntityStatusActionType
 
 export type RemoveTaskActionType = {
@@ -124,7 +122,7 @@ export const updateTaskAC = (taskId: string, domainModel: UpdateDomainModelTaskT
 // Thunk
 
 export const fetchTasksTC = (todoListId: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<ActionsType | SetAppStatusActionType>) => {
         dispatch(setAppStatusAC("loading"))
         tasksAPI.getTasks(todoListId)
             .then((res) => {
@@ -136,7 +134,7 @@ export const fetchTasksTC = (todoListId: string) => {
 }
 
 export const removeTasksTC = (taskId: string, todoListId: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<ActionsType | SetAppStatusActionType>) => {
         dispatch(setAppStatusAC("loading"))
         tasksAPI.deleteTask(todoListId, taskId)
             .then((res) => {
@@ -147,17 +145,14 @@ export const removeTasksTC = (taskId: string, todoListId: string) => {
 }
 
 
-
-export const addTaskTC = (todoListId: string, title: string ) => (dispatch: Dispatch<ActionsType>) => {
+export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsType | SetAppStatusActionType | SetAppErrorActionType>) => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(changeTodoListEntityStatusAC(todoListId,"loading"))
     tasksAPI.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
                 dispatch(addTaskAC(task))
                 dispatch(setAppStatusAC('succeeded'))
-                dispatch(changeTodoListEntityStatusAC(todoListId,"succeeded"))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setAppErrorAC(res.data.messages[0]))

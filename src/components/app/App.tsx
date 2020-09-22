@@ -203,7 +203,6 @@ function App() {
                                     <TodoList
                                         todoList={tl}
                                         key={tl.id}
-                                        entityStatus={tl.entityStatus}
                                         tasks={tasksForTodoList}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
