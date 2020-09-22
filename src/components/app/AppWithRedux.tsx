@@ -9,6 +9,8 @@ import {TodoLists} from "../todoLists/TodoLists";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {RequestStatusType} from "../../state/app-reducer";
+import {BrowserRouter, Route} from 'react-router-dom';
+import {Login} from "../../features/Login";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -23,24 +25,27 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     return (
-        <div className="App">
-            <ErrorSnackbar/>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant="h6">
-                        News
-                    </Typography>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-                {status === 'loading' && <LinearProgress color='secondary'/>}
-            </AppBar>
-            <Container fixed>
-                <TodoLists demo={demo}/>
-            </Container>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <ErrorSnackbar/>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="menu">
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant="h6">
+                            News
+                        </Typography>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                    {status === 'loading' && <LinearProgress color='secondary'/>}
+                </AppBar>
+                <Container fixed>
+                    <Route exact path={'/'} render={() => <TodoLists demo={demo}/>}/>
+                    <Route exact path={'/login'} render={() => <Login/>}/>
+                </Container>
+            </div>
+        </BrowserRouter>
     );
 }
 
