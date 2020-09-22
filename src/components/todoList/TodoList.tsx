@@ -6,8 +6,11 @@ import {Delete} from '@material-ui/icons';
 import {Task} from "../task/Task";
 import {TaskStatuses, TaskType} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from "../../state/todoList-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchTasksTC} from "../../state/tasks-reducer";
+import { Redirect } from "react-router-dom";
+import {AppRootStateType} from "../../state/store";
+import {RequestStatusType} from "../../state/app-reducer";
 
 
 type PropsType = {
@@ -27,8 +30,9 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         console.log("Todolist called")
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
         const addTask = useCallback((title: string) => {
-            debugger
             props.addTask(props.todoList.id, title);
         }, [props.addTask, props.todoList.id])
 
@@ -71,8 +75,11 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
         dispatch(fetchTasksTC(props.todoList.id))
     }, [])
 
-        return <div>
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
 
+        return <div>
             <div className={'todoListTitle'}>
                 <h3><EditableSpan title={props.todoList.title} onChangeTitle={changeTodoListTitle}/></h3>
                 <IconButton onClick={removeTodoList} disabled={props.todoList.entityStatus === 'loading'}>
