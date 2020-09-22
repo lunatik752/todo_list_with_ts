@@ -9,6 +9,7 @@ import {tasksAPI, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 
 type ActionsType =
@@ -154,13 +155,11 @@ export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispa
                 dispatch(addTaskAC(task))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-                dispatch(setAppStatusAC('failed'))
+                handleServerAppError(res.data, dispatch)
             }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
         })
 }
 
@@ -176,7 +175,7 @@ type UpdateDomainModelTaskType = {
 
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    return (dispatch: Dispatch<ActionsType | SetAppStatusActionType | SetAppErrorActionType>, getState: () => AppRootStateType) => {
         dispatch(setAppStatusAC("loading"))
         const task = getState().tasks[todoListId].find(t => t.id === taskId)
         if (!task) {
@@ -193,9 +192,16 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskT
             ...domainModel
         }
         tasksAPI.updateTask(todoListId, taskId, apiModel).then((res) => {
-            dispatch(updateTaskAC(taskId, domainModel, todoListId))
-            dispatch(setAppStatusAC('succeeded'))
+            if(res.data.resultCode === 0 ) {
+                dispatch(updateTaskAC(taskId, domainModel, todoListId))
+                dispatch(setAppStatusAC('succeeded'))
+            }  else {
+                handleServerAppError(res.data, dispatch)
+            }
         })
+            .catch((error) => {
+                handleServerNetworkError(error, dispatch)
+            })
     }
 }
 
