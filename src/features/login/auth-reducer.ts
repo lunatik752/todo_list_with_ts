@@ -1,11 +1,11 @@
 import { Dispatch } from 'redux'
 import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from "../../state/app-reducer";
 
-const initialState: InitialStateType = {
+const initialState: InitialAuthReducerStateType = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const authReducer = (state: InitialAuthReducerStateType = initialState, action: ActionsType): InitialAuthReducerStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}
@@ -27,6 +27,6 @@ export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
 
 // types
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType | SetAppErrorActionType
-type InitialStateType = {
+export type InitialAuthReducerStateType = {
     isLoggedIn: boolean
 }
