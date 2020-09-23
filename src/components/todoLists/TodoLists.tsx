@@ -7,12 +7,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {
     addTodoListTC,
-    changeTodoListFilterAC, changeTodoListTitleTC, fetchTodoListsTC,
+    changeTodoListFilterAC,
+    changeTodoListTitleTC,
+    fetchTodoListsTC,
     FilterValuesType,
     removeTodoListTC,
     TodoListDomainType
 } from "../../state/todoList-reducer";
-import {RequestStatusType} from "../../state/app-reducer";
 import {addTaskTC, removeTasksTC, updateTaskTC} from "../../state/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
 import {TasksStateType} from "../app/AppWithRedux";
@@ -63,9 +64,8 @@ export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
         dispatch(changeTodoListTitleTC(newTitle, todoListId))
     }, [dispatch])
 
-
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(fetchTodoListsTC())

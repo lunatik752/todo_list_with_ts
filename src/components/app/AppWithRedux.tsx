@@ -12,6 +12,7 @@ import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { logoutTC } from '../../features/login/auth-reducer';
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -24,6 +25,8 @@ type PropsType = {
 
 export const AppWithRedux = ({demo = false}: PropsType) => {
 
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -33,6 +36,9 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
 
+    const logoutHandler = () => {
+        dispatch(logoutTC())
+    }
 
 
     if (!isInitialized) {
@@ -55,7 +61,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
                         <Typography variant="h6">
                             News
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress color='secondary'/>}
                 </AppBar>

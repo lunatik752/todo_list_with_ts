@@ -29,7 +29,7 @@ export const appReducer = (state: InitialAppReducerStateType = initialState, act
         case 'APP/SET-ERROR': {
             return {...state, error: action.error}
         }
-        case "APP/INITIALIZED-APP":
+        case "APP/SET-IS-INITIALIZED":
             return {...state, isInitialized: action.isInitialized}
         default:
             return state
@@ -38,33 +38,32 @@ export const appReducer = (state: InitialAppReducerStateType = initialState, act
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
-export type InitializedAppActionType = ReturnType<typeof initializeAppAC>
+export type InitializedAppActionType = ReturnType<typeof setInitializeAppAC>
 
 
 type ActionsType = SetAppStatusActionType | SetAppErrorActionType | InitializedAppActionType
 
 
+export const setAppStatusAC = (status: RequestStatusType) => {
+    return {type: "APP/SET-STATUS", status} as const
+}
 
-export const setAppStatusAC = (status: RequestStatusType) =>  {
-    return {type: "APP/SET-STATUS", status} as const}
+export const setAppErrorAC = (error: RequestErrorType) => {
+    return {type: 'APP/SET-ERROR', error} as const
+}
 
-export const setAppErrorAC = (error: RequestErrorType) =>  {
-    return {type: 'APP/SET-ERROR', error} as const}
-
-export const initializeAppAC = (isInitialized: boolean) =>  {
-    return {type: 'APP/INITIALIZED-APP', isInitialized} as const}
-
-
-
+export const setInitializeAppAC = (isInitialized: boolean) => {
+    return {type: 'APP/SET-IS-INITIALIZED', isInitialized} as const
+}
 
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
-        debugger
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
-            dispatch(initializeAppAC(true));
         } else {
+
         }
+        dispatch(setInitializeAppAC(true))
     })
 }
