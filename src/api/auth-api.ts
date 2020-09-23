@@ -12,6 +12,13 @@ type AuthResponseDataType = {
     login: string
 }
 
+export type LoginParamsType = {
+     email: string
+     password: string
+     rememberMe: boolean
+     captcha?: string
+ }
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -23,6 +30,9 @@ const instance = axios.create({
 export const authAPI = {
     me() {
         return instance.get<ResponseType<AuthResponseDataType>>(`auth/me`)
+    },
+    login(data: LoginParamsType) {
+return instance.post<ResponseType<{ userId?: number }>>( '/auth/login', data)
     },
     logout() {
         return instance.delete<ResponseType>('/auth/login')
