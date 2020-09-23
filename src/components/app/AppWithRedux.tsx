@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
@@ -6,11 +6,12 @@ import Container from "@material-ui/core/Container";
 import {TaskType} from "../../api/tasks-api";
 import {ErrorSnackbar} from "../../common/Allert";
 import {TodoLists} from "../todoLists/TodoLists";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
-import {RequestStatusType} from "../../state/app-reducer";
+import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
+import {Dispatch} from "redux";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -22,7 +23,15 @@ type PropsType = {
 
 
 export const AppWithRedux = ({demo = false}: PropsType) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    })
+
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+
 
     return (
         <BrowserRouter>

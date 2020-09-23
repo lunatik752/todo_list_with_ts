@@ -16,15 +16,17 @@ import {RequestStatusType} from "../../state/app-reducer";
 import {addTaskTC, removeTasksTC, updateTaskTC} from "../../state/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
 import {TasksStateType} from "../app/AppWithRedux";
+import {Redirect} from "react-router-dom";
 
 type PropsType = {
     demo?: boolean
 }
 
 export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
+
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
 
@@ -68,6 +70,11 @@ export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
         }
         dispatch(fetchTodoListsTC())
     }, [])
+
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
 
     return <>
         <Grid container style={{padding: "20px"}}>

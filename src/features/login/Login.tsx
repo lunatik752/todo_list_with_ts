@@ -1,7 +1,17 @@
 import React from 'react'
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../state/store";
+import { Redirect } from 'react-router-dom';
 
 export const Login = () => {
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    if (isLoggedIn) {
+        return <Redirect to={'/'}/>
+    }
+
     return <Grid container justify="center">
         <Grid item xs={4}>
             <FormControl>

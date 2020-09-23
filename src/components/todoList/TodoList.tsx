@@ -30,7 +30,6 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         console.log("Todolist called")
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
         const addTask = useCallback((title: string) => {
             props.addTask(props.todoList.id, title);
@@ -74,10 +73,6 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
         }
         dispatch(fetchTasksTC(props.todoList.id))
     }, [])
-
-    if (!isLoggedIn) {
-        return <Redirect to={'/login'}/>
-    }
 
         return <div>
             <div className={'todoListTitle'}>
