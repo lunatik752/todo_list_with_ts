@@ -10,7 +10,6 @@ export const GetTodoLists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         todoListsApi.getTodoLists().then((res) => {
-                debugger;
                 setState(res.data);
             }
         )
@@ -23,7 +22,6 @@ export const CreateTodoList = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         todoListsApi.createTodoList('newTodoList').then((res) => {
-            debugger;
             setState(res.data);
         })
     }, [])

@@ -69,7 +69,7 @@ export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
             return
         }
         dispatch(fetchTodoListsTC())
-    }, [])
+    }, [demo, dispatch, isLoggedIn])
 
 
     if (!isLoggedIn) {

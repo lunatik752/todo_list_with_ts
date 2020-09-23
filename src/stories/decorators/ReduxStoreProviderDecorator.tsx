@@ -23,11 +23,11 @@ const initialGlobalState: AppRootStateType = {
         {id: "todoListId2", title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus:'loading'}
     ] ,
     tasks: {
-        ["todoListId1"]: [
+        "todoListId1": [
             {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: "todoListId1", addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: ''},
             {id: v1(), title: "JS", status: TaskStatuses.Completed, todoListId: "todoListId1", addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: ''}
         ],
-        ["todoListId2"]: [
+        "todoListId2": [
             {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId: "todoListId2", addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: ''},
             {id: v1(), title: "React Book", status: TaskStatuses.Completed, todoListId: "todoListId2", addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: ''},
         ]

@@ -31,7 +31,6 @@ export const CreateTask = () => {
 
     const createTask = () => {
         tasksAPI.createTask(todoListId, taskTitle).then((res) => {
-            debugger;
             setState(res.data);
         })
     }

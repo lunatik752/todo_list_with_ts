@@ -3,11 +3,11 @@ import {appReducer, InitialAppReducerStateType, setAppErrorAC, setAppStatusAC, s
 let startState: InitialAppReducerStateType;
 
 beforeEach(() => {
-   startState = {
-       status: 'idle',
-       error: null,
-       isInitialized: false
-   }
+    startState = {
+        status: 'idle',
+        error: null,
+        isInitialized: false
+    }
 })
 
 test('error should be changed', () => {

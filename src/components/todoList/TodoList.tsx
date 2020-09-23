@@ -6,11 +6,8 @@ import {Delete} from '@material-ui/icons';
 import {Task} from "../task/Task";
 import {TaskStatuses, TaskType} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from "../../state/todoList-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "../../state/tasks-reducer";
-import { Redirect } from "react-router-dom";
-import {AppRootStateType} from "../../state/store";
-import {RequestStatusType} from "../../state/app-reducer";
 
 
 type PropsType = {
@@ -33,11 +30,11 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         const addTask = useCallback((title: string) => {
             props.addTask(props.todoList.id, title);
-        }, [props.addTask, props.todoList.id])
+        }, [props])
 
         const onAllClickHandler = useCallback(() => {
             props.changeFilter('all', props.todoList.id)
-        }, [props.changeFilter, props.todoList.id]);
+        }, [props]);
 
         const onActiveClickHandler = useCallback(() => {
             props.changeFilter('active', props.todoList.id)
@@ -45,7 +42,7 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         const onCompletedClickHandler = useCallback(() => {
             props.changeFilter('completed', props.todoList.id)
-        }, [props.changeFilter, props.todoList.id]);
+        }, [props]);
 
 
         const removeTodoList = () => {
@@ -54,7 +51,7 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         const changeTodoListTitle = useCallback((newtTitle: string) => {
             props.changeTodoListTitle(newtTitle, props.todoList.id)
-        }, [props.changeTodoListTitle, props.todoList.id]);
+        }, [props]);
 
         let tasksForTodoList = props.tasks;
 
@@ -72,7 +69,7 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             return
         }
         dispatch(fetchTasksTC(props.todoList.id))
-    }, [])
+    }, [ demo, dispatch, props.todoList.id])
 
         return <div>
             <div className={'todoListTitle'}>
