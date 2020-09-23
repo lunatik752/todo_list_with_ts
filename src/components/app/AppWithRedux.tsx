@@ -11,7 +11,7 @@ import {AppRootStateType} from "../../state/store";
 import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
-import {Dispatch} from "redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -31,6 +31,16 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     })
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+
+
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
 
     return (

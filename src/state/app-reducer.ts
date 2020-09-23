@@ -29,6 +29,8 @@ export const appReducer = (state: InitialAppReducerStateType = initialState, act
         case 'APP/SET-ERROR': {
             return {...state, error: action.error}
         }
+        case "APP/INITIALIZED-APP":
+            return {...state, isInitialized: action.isInitialized}
         default:
             return state
     }
@@ -36,17 +38,23 @@ export const appReducer = (state: InitialAppReducerStateType = initialState, act
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+export type InitializedAppActionType = ReturnType<typeof initializeAppAC>
 
-type ActionsType = SetAppStatusActionType | SetAppErrorActionType
+
+type ActionsType = SetAppStatusActionType | SetAppErrorActionType | InitializedAppActionType
 
 
 
 export const setAppStatusAC = (status: RequestStatusType) =>  {
     return {type: "APP/SET-STATUS", status} as const}
 
-
 export const setAppErrorAC = (error: RequestErrorType) =>  {
     return {type: 'APP/SET-ERROR', error} as const}
+
+export const initializeAppAC = (isInitialized: boolean) =>  {
+    return {type: 'APP/INITIALIZED-APP', isInitialized} as const}
+
+
 
 
 
@@ -55,6 +63,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         debugger
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
+            dispatch(initializeAppAC(true));
         } else {
         }
     })
