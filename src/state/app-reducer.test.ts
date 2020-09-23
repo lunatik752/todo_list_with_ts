@@ -1,11 +1,12 @@
-import {appReducer, InitialAppReducerStateType, setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import {appReducer, InitialAppReducerStateType, initializeAppAC, setAppErrorAC, setAppStatusAC} from "./app-reducer";
 
 let startState: InitialAppReducerStateType;
 
 beforeEach(() => {
    startState = {
        status: 'idle',
-       error: null
+       error: null,
+       isInitialized: false
    }
 })
 
@@ -26,6 +27,14 @@ test('status should be changed', () => {
     const endState = appReducer(startState, action)
 
     expect(endState.status).toBe('loading');
+});
+
+test('isInitialized should be changed', () => {
+
+    const action = initializeAppAC(true);
+    const endState = appReducer(startState, action)
+
+    expect(endState.isInitialized).toBe(true);
 });
 
 
