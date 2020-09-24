@@ -9,10 +9,10 @@ import {TodoLists} from "../todoLists/TodoLists";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
-import {BrowserRouter, Route} from 'react-router-dom';
+import {HashRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { logoutTC } from '../../features/login/auth-reducer';
+import {logoutTC} from '../../features/login/auth-reducer';
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -50,7 +50,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
 
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="App">
                 <ErrorSnackbar/>
                 <AppBar position="static">
@@ -70,7 +70,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
                     <Route exact path={'/login'} render={() => <Login/>}/>
                 </Container>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

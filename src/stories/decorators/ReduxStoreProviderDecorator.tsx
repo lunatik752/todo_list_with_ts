@@ -38,7 +38,7 @@ const initialGlobalState: AppRootStateType = {
         isInitialized: true
     },
     auth: {
-        isLoggedIn: false
+        isLoggedIn: true
     }
 };
 
