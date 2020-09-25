@@ -23,7 +23,7 @@ const task: Array<TaskDomainType> = [{
     order: 0,
     priority: TaskPriorities.Hi,
     startDate: '',
-    entityTaskStatus: 'loading'
+    entityTaskStatus: 'idle'
 },
     {
         id: v1(),
@@ -55,14 +55,3 @@ export const TaskBaseExample = (props: any) => {
     )
 }
 
-
-export const TaskDisabledExample = (props: any) => {
-    return (
-        <div>
-            <Task task={task[0]} removeTask={removeTaskCallback} changeStatus={changeStatusCallback}
-                  todoListId={'todoListId1'} changeTaskTitle={changeTaskTitleCallback}/>
-            <Task task={task[1]} removeTask={removeTaskCallback} changeStatus={changeStatusCallback}
-                  todoListId={'todoListId1'} changeTaskTitle={changeTaskTitleCallback}/>
-        </div>
-    )
-}
