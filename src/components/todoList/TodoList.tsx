@@ -4,15 +4,15 @@ import {EditableSpan} from "../../common/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import {Task} from "../task/Task";
-import {TaskStatuses, TaskType} from "../../api/tasks-api";
+import {TaskStatuses} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from "../../state/todoList-reducer";
 import {useDispatch} from "react-redux";
-import {fetchTasksTC} from "../../state/tasks-reducer";
+import {fetchTasksTC, TaskDomainType} from "../../state/tasks-reducer";
 
 
 type PropsType = {
     todoList: TodoListDomainType
-    tasks: Array<TaskType>
+    tasks: Array<TaskDomainType>
     removeTask: (id: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todoListId: string) => void
     addTask: (todoListId: string, title: string) => void
@@ -62,14 +62,14 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             tasksForTodoList = props.tasks.filter(task => task.status === TaskStatuses.Completed)
         }
 
-    const dispatch = useDispatch()
+        const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (demo) {
-            return
-        }
-        dispatch(fetchTasksTC(props.todoList.id))
-    }, [ demo, dispatch, props.todoList.id])
+        useEffect(() => {
+            if (demo) {
+                return
+            }
+            dispatch(fetchTasksTC(props.todoList.id))
+        }, [demo, dispatch, props.todoList.id])
 
         return <div>
             <div className={'todoListTitle'}>

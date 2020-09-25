@@ -3,11 +3,12 @@ import {EditableSpan} from "../../common/EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import Checkbox from '@material-ui/core/Checkbox';
-import {TaskStatuses, TaskType} from "../../api/tasks-api";
+import {TaskStatuses} from "../../api/tasks-api";
+import {TaskDomainType} from "../../state/tasks-reducer";
 
 
 type PropsTaskType = {
-    task: TaskType,
+    task: TaskDomainType,
     removeTask: (id: string, todoListId: string) => void,
     changeStatus: (id: string, status: TaskStatuses, todoListId: string) => void,
     todoListId: string,
@@ -28,15 +29,17 @@ export const Task = React.memo(function (props: PropsTaskType) {
         props.changeTaskTitle(props.task.id, newtTitle, props.todoListId)
     }, [props])
 
+    const disabled = props.task.entityTaskStatus === 'loading'
+
 
         return <div key={props.task.id}
                     className={props.task.status === TaskStatuses.Completed? 'isDone' : ''}>
             <Checkbox color={"primary"}
                       checked={props.task.status === TaskStatuses.Completed}
-                      onChange={onChangeStatusHandler}
+                      onChange={onChangeStatusHandler} disabled={disabled}
             />
-            <EditableSpan title={props.task.title} onChangeTitle={onChangeTitleHandler}/>
-            <IconButton onClick={onClickHandler}>
+            <EditableSpan title={props.task.title} onChangeTitle={onChangeTitleHandler} disabled={disabled}/>
+            <IconButton onClick={onClickHandler} disabled={disabled}>
                 <Delete/>
             </IconButton>
         </div>

@@ -10,10 +10,11 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from '../../state/todoList-reducer';
+import {TaskDomainType} from "../../state/tasks-reducer";
 
 
 export type TasksStateType = {
-    [key: string]: Array<TaskType>
+    [key: string]: Array<TaskDomainType>
 }
 
 
@@ -40,7 +41,8 @@ function App() {
                 description: '',
                 order: 0,
                 priority: TaskPriorities.Hi,
-                startDate: ''
+                startDate: '',
+                entityTaskStatus: 'idle'
             },
             {
                 id: v1(),
@@ -52,7 +54,8 @@ function App() {
                 description: '',
                 order: 0,
                 priority: TaskPriorities.Hi,
-                startDate: ''
+                startDate: '',
+                entityTaskStatus: 'idle'
             }
         ],
         [todoListId2]: [
@@ -66,7 +69,8 @@ function App() {
                 description: '',
                 order: 0,
                 priority: TaskPriorities.Hi,
-                startDate: ''
+                startDate: '',
+                entityTaskStatus: 'idle'
             },
             {
                 id: v1(),
@@ -78,7 +82,8 @@ function App() {
                 description: '',
                 order: 0,
                 priority: TaskPriorities.Hi,
-                startDate: ''
+                startDate: '',
+                entityTaskStatus: 'idle'
             }
         ]
     })
@@ -104,7 +109,7 @@ function App() {
             startDate: ''
         };
         let todoListTasks = tasks[todoListId];
-        tasks[todoListId] = [task, ...todoListTasks]
+        tasks[todoListId] = [{...task, entityTaskStatus: 'idle'}, ...todoListTasks]
         setTasks({...tasks})
     }
 

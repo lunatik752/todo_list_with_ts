@@ -13,9 +13,10 @@ import {HashRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {logoutTC} from '../../features/login/auth-reducer';
+import {TaskDomainType} from "../../state/tasks-reducer";
 
 export type TasksStateType = {
-    [key: string]: Array<TaskType>
+    [key: string]: Array<TaskDomainType>
 }
 
 type PropsType = {
