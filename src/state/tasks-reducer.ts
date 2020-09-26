@@ -7,7 +7,7 @@ import {
 import {tasksAPI, TaskType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
+import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 
@@ -139,12 +139,12 @@ export const changeTaskEntityStatusAC = (todoListId: string, taskId: string, ent
 // Thunk
 
 export const fetchTasksTC = (todoListId: string) => {
-    return (dispatch: Dispatch<ThunkDispatch>) => {
-        dispatch(setAppStatusAC("loading"))
+    return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC({status:"loading"}))
         tasksAPI.getTasks(todoListId)
             .then((res) => {
                 dispatch(setTasksAC(res.data.items, todoListId))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status:'succeeded'}))
             })
             .catch((error) => {
                 handleServerNetworkError(error, dispatch)
@@ -153,14 +153,14 @@ export const fetchTasksTC = (todoListId: string) => {
 }
 
 export const removeTasksTC = (taskId: string, todoListId: string) => {
-    return (dispatch: Dispatch<ThunkDispatch>) => {
-        dispatch(setAppStatusAC("loading"));
+    return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC({status:"loading"}));
         dispatch(changeTaskEntityStatusAC(todoListId, taskId, "loading"))
         tasksAPI.deleteTask(todoListId, taskId)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(removeTaskAC(taskId, todoListId))
-                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC({status:'succeeded'}))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -172,14 +172,14 @@ export const removeTasksTC = (taskId: string, todoListId: string) => {
 }
 
 
-export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ThunkDispatch>) => {
-    dispatch(setAppStatusAC('loading'))
+export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC({status:'loading'}))
     tasksAPI.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
                 dispatch(addTaskAC(task))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status:'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -201,8 +201,8 @@ type UpdateDomainModelTaskType = {
 
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string) => {
-    return (dispatch: Dispatch<ThunkDispatch>, getState: () => AppRootStateType) => {
-        dispatch(setAppStatusAC("loading"))
+    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+        dispatch(setAppStatusAC({status:"loading"}))
         const task = getState().tasks[todoListId].find(t => t.id === taskId)
         if (!task) {
             console.log('task is not found in the state')
@@ -220,7 +220,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskT
         tasksAPI.updateTask(todoListId, taskId, apiModel).then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(updateTaskAC(taskId, domainModel, todoListId))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status:'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -230,10 +230,6 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskT
             })
     }
 }
-
-
-type ThunkDispatch = ActionsType | SetAppStatusActionType | SetAppErrorActionType
-
 
 
 
