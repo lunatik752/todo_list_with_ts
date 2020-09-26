@@ -3,7 +3,6 @@ import './App.css';
 import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import {TaskType} from "../../api/tasks-api";
 import {ErrorSnackbar} from "../../common/Allert";
 import {TodoLists} from "../todoLists/TodoLists";
 import {useDispatch, useSelector} from "react-redux";
