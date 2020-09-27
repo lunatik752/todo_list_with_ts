@@ -54,11 +54,6 @@ export const {setTodoListsAC, removeTodoListAC, addTodoListAC, changeTodoListTit
 export const todoListReducer = slice.reducer
 
 
-export type SetTodoListsActionType = {
-    type: 'SET-TODOLISTS'
-    todoLists: Array<TodoListType>
-}
-
 
 // Thunk
 

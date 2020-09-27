@@ -50,7 +50,7 @@ test('correct todolist should be added', () => {
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
     expect(endState[0].filter).toBe('all');
-    expect(endState[0].entityStatus).toBe('succeeded');
+    expect(endState[0].entityStatus).toBe('idle');
 });
 
 test('correct todolist should change its name', () => {
