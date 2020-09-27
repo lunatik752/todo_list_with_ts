@@ -43,28 +43,9 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer;
 
-//     (state: InitialAppReducerStateType = initialState, action: ActionsType): InitialAppReducerStateType => {
-//     switch (action.type) {
-//         case 'APP/SET-STATUS':
-//             return {...state, status: action.status}
-//         case 'APP/SET-ERROR': {
-//             return {...state, error: action.error}
-//         }
-//         case "APP/SET-IS-INITIALIZED":
-//             return {...state, isInitialized: action.isInitialized}
-//         default:
-//             return state
-//     }
-// }
 
 
-
-export const {setAppStatusAC} = slice.actions
-
-export const {setAppErrorAC} = slice.actions
-
-export const {setInitializeAppAC} = slice.actions
-
+export const {setAppStatusAC, setAppErrorAC, setInitializeAppAC} = slice.actions
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {

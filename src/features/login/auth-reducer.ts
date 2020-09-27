@@ -23,18 +23,6 @@ export const authReducer = slice.reducer;
 
 export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 
-//     (state: InitialAuthReducerStateType = initialState, action: ActionsType): InitialAuthReducerStateType => {
-//     switch (action.type) {
-//         case 'login/SET-IS-LOGGED-IN':
-//             return {...state, isLoggedIn: action.value}
-//         default:
-//             return state
-//     }
-// }
-
-// actions
-// export const setIsLoggedInAC = (value: boolean) =>
-//     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
@@ -68,3 +56,5 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             handleServerNetworkError(error, dispatch)
         })
 }
+
+
