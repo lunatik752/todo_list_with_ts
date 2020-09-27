@@ -32,7 +32,7 @@ const slice = createSlice({
             }
         },
         addTodoListAC(state, action: PayloadAction<{ todoList: TodoListType }>) {
-            state.push({...action.payload.todoList, filter: 'all', entityStatus: 'idle'})
+            state.unshift({...action.payload.todoList, filter: 'all', entityStatus: 'idle'})
         },
         changeTodoListTitleAC(state, action: PayloadAction<{ newTitle: string, todoListId: string }>) {
             const index = state.findIndex(tl => tl.id === action.payload.todoListId);

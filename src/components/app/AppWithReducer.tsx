@@ -49,12 +49,12 @@ function AppWithReducer() {
 
 
     function removeTask(id: string, todoListId: string) {
-        let action = removeTaskAC(id, todoListId);
+        let action = removeTaskAC({taskId: id, todoListId});
         dispatchToTasks(action)
     }
 
     function addTask(title: string, todoListId: string) {
-        let action = addTaskAC({
+        let action = addTaskAC({task:{
             title: title,
             status: TaskStatuses.New,
             id: 'id exist',
@@ -65,12 +65,13 @@ function AppWithReducer() {
             priority: TaskPriorities.Hi,
             startDate: '',
             todoListId: todoListId
-        });
+        }});
         dispatchToTasks(action)
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        let action = updateTaskAC(id, {status}, todoListId);
+        let action = updateTaskAC({taskId: id, domainModel: {status}, todoListId})
+        // (id, {status}, todoListId);
         dispatchToTasks(action)
     }
 
@@ -100,7 +101,7 @@ function AppWithReducer() {
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = updateTaskAC(id, {title: newTitle}, todoListId);
+        let action = updateTaskAC({taskId: id, domainModel: {title: newTitle}, todoListId});
         dispatchToTasks(action)
     }
 
