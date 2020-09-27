@@ -4,6 +4,10 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils/error-
 import {authAPI, LoginParamsType} from '../../api/auth-api';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+export type InitialAuthReducerStateType = {
+    isLoggedIn: boolean
+}
+
 const initialState = {
     isLoggedIn: false
 }
