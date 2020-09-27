@@ -14,7 +14,7 @@ test('error should be changed', () => {
 
     const error = 'some error';
 
-    const action = setAppErrorAC(error);
+    const action = setAppErrorAC({error: error});
     const endState = appReducer(startState, action)
 
     expect(endState.error).toBe(error);
@@ -23,7 +23,7 @@ test('error should be changed', () => {
 
 test('status should be changed', () => {
 
-    const action = setAppStatusAC("loading");
+    const action = setAppStatusAC({status: "loading"});
     const endState = appReducer(startState, action)
 
     expect(endState.status).toBe('loading');
@@ -31,7 +31,7 @@ test('status should be changed', () => {
 
 test('isInitialized should be changed', () => {
 
-    const action = setInitializeAppAC(true);
+    const action = setInitializeAppAC({isInitialized: true});
     const endState = appReducer(startState, action)
 
     expect(endState.isInitialized).toBe(true);
