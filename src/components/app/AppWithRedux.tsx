@@ -8,7 +8,7 @@ import {TodoLists} from "../todoLists/TodoLists";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
-import {HashRouter, Route} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {logoutTC} from '../../features/login/auth-reducer';
@@ -50,27 +50,25 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
 
 
     return (
-        <HashRouter>
-            <div className="App">
-                <ErrorSnackbar/>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant="h6">
-                            News
-                        </Typography>
-                        {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
-                    </Toolbar>
-                    {status === 'loading' && <LinearProgress color='secondary'/>}
-                </AppBar>
-                <Container fixed>
-                    <Route exact path={'/'} render={() => <TodoLists demo={demo}/>}/>
-                    <Route exact path={'/login'} render={() => <Login/>}/>
-                </Container>
-            </div>
-        </HashRouter>
+        <div className="App">
+            <ErrorSnackbar/>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        News
+                    </Typography>
+                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+                </Toolbar>
+                {status === 'loading' && <LinearProgress color='secondary'/>}
+            </AppBar>
+            <Container fixed>
+                <Route exact path={'/'} render={() => <TodoLists demo={demo}/>}/>
+                <Route exact path={'/login'} render={() => <Login/>}/>
+            </Container>
+        </div>
     );
 }
 
