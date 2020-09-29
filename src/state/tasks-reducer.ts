@@ -84,20 +84,6 @@ export const tasksReducer = slice.reducer
 export const {changeTaskEntityStatusAC, updateTaskAC, addTaskAC, removeTaskAC} = slice.actions
 
 
-// Thunk
-
-// export const _fetchTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
-//     dispatch(setAppStatusAC({status: "loading"}))
-//     tasksAPI.getTasks(todoListId)
-//         .then((res) => {
-//             dispatch(setTasksAC({tasks: res.data.items, todoListId}))
-//             dispatch(setAppStatusAC({status: 'succeeded'}))
-//         })
-//         .catch((error) => {
-//             handleServerNetworkError(error, dispatch)
-//         })
-// }
-
 export const removeTasksTC = (taskId: string, todoListId: string) => {
     return (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: "loading"}));

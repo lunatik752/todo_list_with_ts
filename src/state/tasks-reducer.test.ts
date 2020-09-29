@@ -1,9 +1,7 @@
 import {
     addTaskAC,
-
     removeTaskAC,
-    setTasksAC,
-    tasksReducer, updateTaskAC, changeTaskEntityStatusAC
+    tasksReducer, updateTaskAC, changeTaskEntityStatusAC, fetchTasksTC
 } from './tasks-reducer';
 import {TasksStateType} from '../components/app/App';
 import {addTodoListAC, removeTodoListAC, setTodoListsAC} from "./todoList-reducer";
@@ -233,7 +231,7 @@ test('empty arrays should be added when we set todoLists', () => {
 })
 
 test('tasks should be added for todolist', () => {
-    const action = setTasksAC({tasks: startState["todoListId1"], todoListId: "todoListId1"});
+    const action = fetchTasksTC.fulfilled({tasks: startState["todoListId1"], todoListId: "todoListId1"},'requestId',"todoListId1");
 
     const endState = tasksReducer({
         "todoListId2": [],
@@ -245,7 +243,7 @@ test('tasks should be added for todolist', () => {
 })
 
 test('entityTaskStatus should be changed for task ', () => {
-    const action = changeTaskEntityStatusAC({todoListId: "todoListId1", taskId: '1', entityTaskStatus:'loading'});
+    const action = changeTaskEntityStatusAC({todoListId: "todoListId1", taskId: '1', entityTaskStatus: 'loading'});
 
     const endState = tasksReducer(startState, action)
 
