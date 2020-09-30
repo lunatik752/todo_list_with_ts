@@ -97,7 +97,8 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTasksTC.fulfilled({taskId: "2", todoListId: "todoListId2"}, '', {taskId: "2", todoListId: "todoListId2"});
+    const params = {taskId: "2", todoListId: "todoListId2"};
+    const action = removeTasksTC.fulfilled(params, '', params);
 
     const endState = tasksReducer(startState, action)
 
