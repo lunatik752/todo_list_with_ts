@@ -3,6 +3,7 @@ import axios from 'axios'
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
+    fieldsErrors?: Array<{ field: string, error: string }>
     data: D
 }
 
