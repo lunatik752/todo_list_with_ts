@@ -1,6 +1,5 @@
 import {
-    addTaskAC,
-    tasksReducer, updateTaskAC, changeTaskEntityStatusAC, fetchTasksTC, removeTasksTC
+    tasksReducer, updateTaskAC, changeTaskEntityStatusAC, fetchTasksTC, removeTaskTC, addTaskTC
 } from './tasks-reducer';
 import {TasksStateType} from '../components/app/App';
 import {addTodoListAC, removeTodoListAC, setTodoListsAC} from "./todoList-reducer";
@@ -98,7 +97,7 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
 
     const params = {taskId: "2", todoListId: "todoListId2"};
-    const action = removeTasksTC.fulfilled(params, '', params);
+    const action = removeTaskTC.fulfilled(params, '', params);
 
     const endState = tasksReducer(startState, action)
 
@@ -122,7 +121,7 @@ test('correct task should be added to correct array', () => {
         startDate: '',
         todoListId: "todoListId2"
     };
-    const action = addTaskAC({task});
+    const action = addTaskTC.fulfilled({task}, 'requestId', {todoListId: task.todoListId, title: task.title});
 
     const endState = tasksReducer(startState, action)
 
