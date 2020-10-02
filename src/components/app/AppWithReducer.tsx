@@ -16,7 +16,7 @@ import {
     removeTodoListAC,
     todoListReducer,
 } from "../../state/todoList-reducer";
-import {addTaskAC, removeTasksTC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
+import {addTaskTC, removeTasksTC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 
 export type TasksStateType = {
@@ -54,7 +54,7 @@ function AppWithReducer() {
     }
 
     function addTask(title: string, todoListId: string) {
-        let action = addTaskAC({task:{
+        let action = addTaskTC.fulfilled({task:{
             title: title,
             status: TaskStatuses.New,
             id: 'id exist',
@@ -65,7 +65,7 @@ function AppWithReducer() {
             priority: TaskPriorities.Hi,
             startDate: '',
             todoListId: todoListId
-        }});
+        }}, '', {todoListId, title});
         dispatchToTasks(action)
     }
 

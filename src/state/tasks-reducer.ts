@@ -71,31 +71,12 @@ export const addTaskTC = createAsyncThunk('tasks/addTaskTasks', async (param: { 
     }
 })
 
-export const _addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
-    tasksAPI.createTask(todoListId, title)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                const task = res.data.data.item
-                dispatch(addTaskAC({task}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch((error) => {
-            handleServerNetworkError(error, dispatch)
-        })
-}
 
 
 const slice = createSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: {
-        addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
-            state[action.payload.task.todoListId].unshift({...action.payload.task, entityTaskStatus: 'idle'})
-        },
         updateTaskAC(state, action: PayloadAction<{ taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string }>) {
             const tasks = state[action.payload.todoListId]
             const index = tasks.findIndex(t => t.id === action.payload.taskId)
@@ -146,7 +127,7 @@ const slice = createSlice({
 
 export const tasksReducer = slice.reducer
 
-export const {changeTaskEntityStatusAC, updateTaskAC, addTaskAC} = slice.actions
+export const {changeTaskEntityStatusAC, updateTaskAC} = slice.actions
 
 
 type UpdateDomainModelTaskType = {
