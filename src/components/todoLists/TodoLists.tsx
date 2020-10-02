@@ -14,7 +14,7 @@ import {
     removeTodoListTC,
     TodoListDomainType
 } from "../../state/todoList-reducer";
-import {addTaskTC, removeTasksTC, updateTaskTC} from "../../state/tasks-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "../../state/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
 import {TasksStateType} from "../app/AppWithRedux";
 import {Redirect} from "react-router-dom";
@@ -23,7 +23,7 @@ type PropsType = {
     demo?: boolean
 }
 
-export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
+export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
 
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
@@ -32,15 +32,15 @@ export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
 
 
     const removeTask = useCallback(function (taskId: string, todoListId: string) {
-        dispatch(removeTasksTC({taskId, todoListId}))
+        dispatch(removeTaskTC({taskId, todoListId}))
     }, [dispatch])
 
     const addTask = useCallback(function (todoListId: string, title: string) {
         dispatch(addTaskTC({todoListId, title}))
     }, [dispatch])
 
-    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoListId: string) {
-        dispatch(updateTaskTC(id, {status}, todoListId))
+    const changeStatus = useCallback(function (taskId: string, status: TaskStatuses, todoListId: string) {
+        dispatch(updateTaskTC({taskId, domainModel: {status}, todoListId}))
     }, [dispatch])
 
 
@@ -56,8 +56,8 @@ export const TodoLists: React.FC<PropsType> = ({demo=false}) => {
         dispatch(addTodoListTC(title));
     }, [dispatch])
 
-    const changeTitle = useCallback(function (id: string, newTitle: string, todoListId: string) {
-        dispatch(updateTaskTC(id, {title: newTitle}, todoListId))
+    const changeTitle = useCallback(function (taskId: string, newTitle: string, todoListId: string) {
+        dispatch(updateTaskTC({taskId, domainModel: {title: newTitle}, todoListId}))
     }, [dispatch])
 
     const changeTodoListTitle = useCallback(function (newTitle: string, todoListId: string) {

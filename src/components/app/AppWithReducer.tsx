@@ -16,7 +16,7 @@ import {
     removeTodoListAC,
     todoListReducer,
 } from "../../state/todoList-reducer";
-import {addTaskTC, removeTasksTC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 
 export type TasksStateType = {
@@ -49,7 +49,7 @@ function AppWithReducer() {
 
 
     function removeTask(taskId: string, todoListId: string) {
-        let action = removeTasksTC.fulfilled({taskId, todoListId}, '',{taskId, todoListId} );
+        let action = removeTaskTC.fulfilled({taskId, todoListId}, '',{taskId, todoListId} );
         dispatchToTasks(action)
     }
 

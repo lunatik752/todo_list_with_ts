@@ -30,7 +30,7 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoList
     }
 })
 
-export const removeTasksTC = createAsyncThunk('tasks/removeTasks', async (param: { taskId: string, todoListId: string }, thunkAPI) => {
+export const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: { taskId: string, todoListId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
     thunkAPI.dispatch(changeTaskEntityStatusAC({
         todoListId: param.todoListId,
@@ -53,7 +53,7 @@ export const removeTasksTC = createAsyncThunk('tasks/removeTasks', async (param:
     }
 })
 
-export const addTaskTC = createAsyncThunk('tasks/addTaskTasks', async (param: { todoListId: string, title: string }, thunkAPI) => {
+export const addTaskTC = createAsyncThunk('tasks/addTask', async (param: { todoListId: string, title: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await tasksAPI.createTask(param.todoListId, param.title)
@@ -71,6 +71,70 @@ export const addTaskTC = createAsyncThunk('tasks/addTaskTasks', async (param: { 
     }
 })
 
+export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: { taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string }, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
+    const state = thunkAPI.getState() as AppRootStateType
+    const task = state.tasks[param.todoListId].find(t => t.id === param.taskId)
+    if (!task) {
+        console.log('task is not found in the state')
+        return thunkAPI.rejectWithValue({})
+    }
+    const apiModel = {
+        title: task.title,
+        startDate: task.startDate,
+        priority: task.priority,
+        description: task.description,
+        deadline: task.deadline,
+        status: task.status,
+        ...param.domainModel
+    }
+    try {
+        const res = await tasksAPI.updateTask(param.todoListId, param.taskId, apiModel)
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            return {taskId: param.taskId, domainModel: param.domainModel, todoListId: param.todoListId}
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch)
+            return thunkAPI.rejectWithValue({})
+        }
+    } catch
+        (error) {
+        handleServerNetworkError(error, thunkAPI.dispatch)
+        return thunkAPI.rejectWithValue({})
+    }
+})
+
+
+export const _updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string) => {
+    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+        dispatch(setAppStatusAC({status: "loading"}))
+        const task = getState().tasks[todoListId].find(t => t.id === taskId)
+        if (!task) {
+            console.log('task is not found in the state')
+            return
+        }
+        const apiModel = {
+            title: task.title,
+            startDate: task.startDate,
+            priority: task.priority,
+            description: task.description,
+            deadline: task.deadline,
+            status: task.status,
+            ...domainModel
+        }
+        tasksAPI.updateTask(todoListId, taskId, apiModel).then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(updateTaskAC({taskId, domainModel, todoListId}))
+                dispatch(setAppStatusAC({status: 'succeeded'}))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+            .catch((error) => {
+                handleServerNetworkError(error, dispatch)
+            })
+    }
+}
 
 
 const slice = createSlice({
@@ -109,7 +173,7 @@ const slice = createSlice({
                 state[action.payload.todoListId] = action.payload.tasks.map((t: any) => ({...t, entityTaskStatus: 'idle'}))
             }
         )
-        builder.addCase(removeTasksTC.fulfilled, (state, action) => {
+        builder.addCase(removeTaskTC.fulfilled, (state, action) => {
                 const index = state[action.payload.todoListId].findIndex(t => t.id === action.payload.taskId)
                 if (index > -1) {
                     state[action.payload.todoListId].splice(index, 1)
@@ -120,7 +184,15 @@ const slice = createSlice({
                 state[action.payload.task.todoListId].unshift({...action.payload.task, entityTaskStatus: 'idle'})
             }
         )
+        builder.addCase(updateTaskTC.fulfilled, (state, action) => {
+                const tasks = state[action.payload.todoListId]
+                const index = tasks.findIndex(t => t.id === action.payload.taskId)
+                if (index > -1) {
+                    tasks[index] = {...tasks[index], ...action.payload.domainModel}
+                }
 
+            }
+        )
     }
 })
 
@@ -138,38 +210,3 @@ type UpdateDomainModelTaskType = {
     startDate?: string
     deadline?: string
 }
-
-
-export const updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
-        dispatch(setAppStatusAC({status: "loading"}))
-        const task = getState().tasks[todoListId].find(t => t.id === taskId)
-        if (!task) {
-            console.log('task is not found in the state')
-            return
-        }
-        const apiModel = {
-            title: task.title,
-            startDate: task.startDate,
-            priority: task.priority,
-            description: task.description,
-            deadline: task.deadline,
-            status: task.status,
-            ...domainModel
-        }
-        tasksAPI.updateTask(todoListId, taskId, apiModel).then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(updateTaskAC({taskId, domainModel, todoListId}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-            .catch((error) => {
-                handleServerNetworkError(error, dispatch)
-            })
-    }
-}
-
-
-
