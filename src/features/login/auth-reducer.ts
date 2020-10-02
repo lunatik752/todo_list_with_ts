@@ -9,7 +9,7 @@ export type InitialAuthReducerStateType = {
     isLoggedIn: boolean
 }
 
-export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> } }>('auth/login', async (param, thunkAPI) => {
+export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }}>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
     try {
         const res = await authAPI.login(param)
@@ -59,11 +59,11 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
+        builder.addCase(loginTC.fulfilled, (state) => {
                 state.isLoggedIn = true;
             }
         )
-        builder.addCase(logoutTC.fulfilled, (state, action) => {
+        builder.addCase(logoutTC.fulfilled, (state) => {
                 state.isLoggedIn = false;
             }
         )
