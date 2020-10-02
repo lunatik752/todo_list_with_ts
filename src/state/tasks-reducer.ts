@@ -1,5 +1,4 @@
 import {tasksAPI, TaskType} from "../api/tasks-api";
-import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
@@ -105,49 +104,11 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: {
 })
 
 
-export const _updateTaskTC = (taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string) => {
-    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
-        dispatch(setAppStatusAC({status: "loading"}))
-        const task = getState().tasks[todoListId].find(t => t.id === taskId)
-        if (!task) {
-            console.log('task is not found in the state')
-            return
-        }
-        const apiModel = {
-            title: task.title,
-            startDate: task.startDate,
-            priority: task.priority,
-            description: task.description,
-            deadline: task.deadline,
-            status: task.status,
-            ...domainModel
-        }
-        tasksAPI.updateTask(todoListId, taskId, apiModel).then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(updateTaskAC({taskId, domainModel, todoListId}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-            .catch((error) => {
-                handleServerNetworkError(error, dispatch)
-            })
-    }
-}
-
 
 const slice = createSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: {
-        updateTaskAC(state, action: PayloadAction<{ taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string }>) {
-            const tasks = state[action.payload.todoListId]
-            const index = tasks.findIndex(t => t.id === action.payload.taskId)
-            if (index > -1) {
-                tasks[index] = {...tasks[index], ...action.payload.domainModel}
-            }
-        },
         changeTaskEntityStatusAC(state, action: PayloadAction<{ todoListId: string, taskId: string, entityTaskStatus: RequestStatusType }>) {
             const tasks = state[action.payload.todoListId]
             const index = tasks.findIndex(t => t.id === action.payload.taskId)
@@ -193,13 +154,14 @@ const slice = createSlice({
 
             }
         )
+
     }
 })
 
 
 export const tasksReducer = slice.reducer
 
-export const {changeTaskEntityStatusAC, updateTaskAC} = slice.actions
+export const {changeTaskEntityStatusAC} = slice.actions
 
 
 type UpdateDomainModelTaskType = {
