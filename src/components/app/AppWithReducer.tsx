@@ -16,7 +16,7 @@ import {
     removeTodoListAC,
     todoListReducer,
 } from "../../state/todoList-reducer";
-import {addTaskTC, removeTaskTC, tasksReducer, updateTaskAC} from "../../state/tasks-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../../state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 
 export type TasksStateType = {
@@ -49,7 +49,7 @@ function AppWithReducer() {
 
 
     function removeTask(taskId: string, todoListId: string) {
-        let action = removeTaskTC.fulfilled({taskId, todoListId}, '',{taskId, todoListId} );
+        let action = removeTaskTC.fulfilled({taskId, todoListId}, 'requestId',{taskId, todoListId} );
         dispatchToTasks(action)
     }
 
@@ -65,12 +65,12 @@ function AppWithReducer() {
             priority: TaskPriorities.Hi,
             startDate: '',
             todoListId: todoListId
-        }}, '', {todoListId, title});
+        }}, 'requestId', {todoListId, title});
         dispatchToTasks(action)
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        let action = updateTaskAC({taskId: id, domainModel: {status}, todoListId})
+        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {status}, todoListId}, 'requestId', {taskId: id, domainModel: {status}, todoListId})
         // (id, {status}, todoListId);
         dispatchToTasks(action)
     }
@@ -101,7 +101,7 @@ function AppWithReducer() {
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = updateTaskAC({taskId: id, domainModel: {title: newTitle}, todoListId});
+        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {title: newTitle}, todoListId}, 'requestId', {taskId: id, domainModel: {title: newTitle}, todoListId});
         dispatchToTasks(action)
     }
 
