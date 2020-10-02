@@ -19,35 +19,38 @@ const initialState: TasksStateType = {};
 
 export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoListId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
-    const res = await tasksAPI.getTasks(todoListId);
-    const tasks = res.data.items;
-    thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
-    return {tasks, todoListId};
-
-    // .catch((error) => {
-    //     handleServerNetworkError(error, thunkAPI.dispatch)
-    // })
+    try {
+        const res = await tasksAPI.getTasks(todoListId);
+        const tasks = res.data.items;
+        thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}));
+        return {tasks, todoListId}
+    } catch (error) {
+        handleServerNetworkError(error, thunkAPI.dispatch)
+        return thunkAPI.rejectWithValue({})
+    }
 })
 
 export const removeTasksTC = createAsyncThunk('tasks/removeTasks', async (param: { taskId: string, todoListId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
-    // thunkAPI.dispatch(changeTaskEntityStatusAC({
-    //     todoListId: param.todoListId,
-    //     taskId: param.taskId,
-    //     entityTaskStatus: "loading"
-    // }))
-     await tasksAPI.deleteTask(param.todoListId, param.taskId)
-                // if (res.data.resultCode === 0) {
-                thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
-                return {taskId: param.taskId, todoListId: param.todoListId}
-                // }
-                //     else {
-                //         handleServerAppError(res.data, dispatch)
-                //     }
-                // })
-                // .catch((error) => {
-                //     handleServerNetworkError(error, dispatch)
-                // })
+    thunkAPI.dispatch(changeTaskEntityStatusAC({
+        todoListId: param.todoListId,
+        taskId: param.taskId,
+        entityTaskStatus: "loading"
+    }))
+    try {
+        const res = await tasksAPI.deleteTask(param.todoListId, param.taskId)
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            return {taskId: param.taskId, todoListId: param.todoListId}
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch)
+            return thunkAPI.rejectWithValue({})
+        }
+    } catch
+        (error) {
+        handleServerNetworkError(error, thunkAPI.dispatch)
+        return thunkAPI.rejectWithValue({})
+    }
 })
 
 // export const _removeTasksTC = (taskId: string, todoListId: string) => {
