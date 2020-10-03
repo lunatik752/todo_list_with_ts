@@ -3,7 +3,7 @@ import {AppRootStateType} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {addTodoListAC, removeTodoListAC, setTodoListsAC} from "./todoList-reducer";
+import {addTodoListAC, fetchTodoListsTC, removeTodoListAC} from "./todoList-reducer";
 
 
 export type TaskDomainType = TaskType & {
@@ -14,7 +14,6 @@ type TasksStateType = {
     [key: string]: Array<TaskDomainType>
 }
 
-const initialState: TasksStateType = {};
 
 export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoListId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
@@ -107,7 +106,7 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: {
 
 const slice = createSlice({
     name: 'tasks',
-    initialState: initialState,
+    initialState: {} as TasksStateType,
     reducers: {
         changeTaskEntityStatusAC(state, action: PayloadAction<{ todoListId: string, taskId: string, entityTaskStatus: RequestStatusType }>) {
             const tasks = state[action.payload.todoListId]
@@ -124,7 +123,7 @@ const slice = createSlice({
         builder.addCase(removeTodoListAC, (state, action) => {
             delete state[action.payload.todoListId];
         })
-        builder.addCase(setTodoListsAC, (state, action) => {
+        builder.addCase(fetchTodoListsTC.fulfilled, (state, action) => {
                 action.payload.todoLists.forEach(tl => {
                     state[tl.id] = [];
                 })
