@@ -61,7 +61,7 @@ export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
     }, [dispatch])
 
     const changeTodoListTitle = useCallback(function (newTitle: string, todoListId: string) {
-        dispatch(changeTodoListTitleTC(newTitle, todoListId))
+        dispatch(changeTodoListTitleTC({newTitle, todoListId}))
     }, [dispatch])
 
     useEffect(() => {

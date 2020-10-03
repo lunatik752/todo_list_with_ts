@@ -44,7 +44,7 @@ export const removeTodoListTC = createAsyncThunk('todoLists/removeTodoList', asy
 })
 
 
-export const changeTodoListTitleTC = createAsyncThunk('todoLists/changeTodoListTitle', async (params:{newTitle: string, todoListId: string}, {dispatch, rejectWithValue}) => {
+export const changeTodoListTitleTC = createAsyncThunk('todoLists/changeTodoListTitle', async (params: { newTitle: string, todoListId: string }, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: "loading"}))
     try {
         const res = await todoListsApi.updateTodoList(params.todoListId, params.newTitle);
@@ -79,32 +79,29 @@ const slice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(fetchTodoListsTC.fulfilled, (state,action) => {
-            return  action.payload.todoLists.map(tl => ({
+        builder.addCase(fetchTodoListsTC.fulfilled, (state, action) => {
+            return action.payload.todoLists.map(tl => ({
                 ...tl,
                 filter: 'all',
                 entityStatus: 'idle'
             }))
         })
-        builder.addCase(removeTodoListTC.fulfilled, (state,action) => {
+        builder.addCase(removeTodoListTC.fulfilled, (state, action) => {
             const index = state.findIndex(tl => tl.id === action.payload.todoListId)
             if (index > -1) {
                 state.splice(index, 1)
             }
         })
-        builder.addCase(changeTodoListTitleTC.fulfilled, (state,action) => {
+        builder.addCase(changeTodoListTitleTC.fulfilled, (state, action) => {
             const index = state.findIndex(tl => tl.id === action.payload.todoListId);
             state[index].title = action.payload.newTitle;
         })
     }
 })
 
-export const { addTodoListAC, changeTodoListFilterAC, changeTodoListEntityStatusAC} = slice.actions
+export const {addTodoListAC, changeTodoListFilterAC, changeTodoListEntityStatusAC} = slice.actions
 
 export const todoListReducer = slice.reducer
-
-
-
 
 
 export const addTodoListTC = (title: string) => {

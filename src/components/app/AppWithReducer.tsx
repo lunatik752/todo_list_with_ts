@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
     addTodoListAC,
-    changeTodoListFilterAC,
+    changeTodoListFilterAC, changeTodoListTitleTC,
     FilterValuesType, removeTodoListTC,
     todoListReducer,
 } from "../../state/todoList-reducer";
@@ -28,47 +28,105 @@ function AppWithReducer() {
 
 
     let [todoLists, dispatchToTodoLists] = useReducer(todoListReducer, [
-        {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '',
-            order: 0, entityStatus:'succeeded'},
-        {id: todoListId2, title: 'What to bue', filter: 'all', addedDate: '',
-            order: 0, entityStatus:'succeeded'},
+        {
+            id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '',
+            order: 0, entityStatus: 'succeeded'
+        },
+        {
+            id: todoListId2, title: 'What to bue', filter: 'all', addedDate: '',
+            order: 0, entityStatus: 'succeeded'
+        },
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todoListId1]: [
-            {id: v1(), title: 'HTML&CSS', status: TaskStatuses.Completed, todoListId: todoListId1, addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: '', entityTaskStatus: 'idle'},
-            {id: v1(), title: 'JS', status: TaskStatuses.Completed, todoListId:todoListId1, addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: '',entityTaskStatus: 'idle'}
+            {
+                id: v1(),
+                title: 'HTML&CSS',
+                status: TaskStatuses.Completed,
+                todoListId: todoListId1,
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                entityTaskStatus: 'idle'
+            },
+            {
+                id: v1(),
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                todoListId: todoListId1,
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                entityTaskStatus: 'idle'
+            }
         ],
         [todoListId2]: [
-            {id: v1(), title: 'Milk', status: TaskStatuses.Completed, todoListId: todoListId2, addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: '', entityTaskStatus: 'idle'},
-            {id: v1(), title: 'React Book', status: TaskStatuses.Completed, todoListId: todoListId2, addedDate: '', deadline: '', description: '', order: 0, priority: TaskPriorities.Hi , startDate: '', entityTaskStatus: 'idle'}
+            {
+                id: v1(),
+                title: 'Milk',
+                status: TaskStatuses.Completed,
+                todoListId: todoListId2,
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                entityTaskStatus: 'idle'
+            },
+            {
+                id: v1(),
+                title: 'React Book',
+                status: TaskStatuses.Completed,
+                todoListId: todoListId2,
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                entityTaskStatus: 'idle'
+            }
         ]
     })
 
 
     function removeTask(taskId: string, todoListId: string) {
-        let action = removeTaskTC.fulfilled({taskId, todoListId}, 'requestId',{taskId, todoListId} );
+        let action = removeTaskTC.fulfilled({taskId, todoListId}, 'requestId', {taskId, todoListId});
         dispatchToTasks(action)
     }
 
     function addTask(title: string, todoListId: string) {
-        let action = addTaskTC.fulfilled({task:{
-            title: title,
-            status: TaskStatuses.New,
-            id: 'id exist',
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            priority: TaskPriorities.Hi,
-            startDate: '',
-            todoListId: todoListId
-        }}, 'requestId', {todoListId, title});
+        let action = addTaskTC.fulfilled({
+            task: {
+                title: title,
+                status: TaskStatuses.New,
+                id: 'id exist',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Hi,
+                startDate: '',
+                todoListId: todoListId
+            }
+        }, 'requestId', {todoListId, title});
         dispatchToTasks(action)
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {status}, todoListId}, 'requestId', {taskId: id, domainModel: {status}, todoListId})
+        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {status}, todoListId}, 'requestId', {
+            taskId: id,
+            domainModel: {status},
+            todoListId
+        })
         // (id, {status}, todoListId);
         dispatchToTasks(action)
     }
@@ -87,24 +145,30 @@ function AppWithReducer() {
 
     function addTodoList(title: string) {
         const action = addTodoListAC({
-            todoList: {
-                id: '123',
-                order: 0,
-                addedDate: '',
-                title: title,
-            }}
+                todoList: {
+                    id: '123',
+                    order: 0,
+                    addedDate: '',
+                    title: title,
+                }
+            }
         );
         dispatchToTasks(action);
         dispatchToTodoLists(action)
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {title: newTitle}, todoListId}, 'requestId', {taskId: id, domainModel: {title: newTitle}, todoListId});
+        let action = updateTaskTC.fulfilled({
+            taskId: id,
+            domainModel: {title: newTitle},
+            todoListId
+        }, 'requestId', {taskId: id, domainModel: {title: newTitle}, todoListId});
         dispatchToTasks(action)
     }
 
     function changeTodoListTitle(newTitle: string, todoListId: string) {
-        const action = changeTodoListTitleAC({newTitle: newTitle, todoListId});
+        const payload = {newTitle: newTitle, todoListId};
+        const action = changeTodoListTitleTC.fulfilled(payload, 'requestId', payload);
         dispatchToTodoLists(action)
     }
 
