@@ -3,8 +3,6 @@ import {Dispatch} from "redux";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {tasksAPI} from "../api/tasks-api";
-
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -63,10 +61,10 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(fetchTodoListsTC.fulfilled, (state,action) => {
-              action.payload.todoLists.map(tl => ({
-                tl,
+            return  action.payload.todoLists.map(tl => ({
+                ...tl,
                 filter: 'all',
-                entityStatus: 'succeeded'
+                entityStatus: 'idle'
             }))
         })
     }
