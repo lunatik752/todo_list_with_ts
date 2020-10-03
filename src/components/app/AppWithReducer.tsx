@@ -12,8 +12,7 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
-    FilterValuesType,
-    removeTodoListAC,
+    FilterValuesType, removeTodoListTC,
     todoListReducer,
 } from "../../state/todoList-reducer";
 import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../../state/tasks-reducer";
@@ -81,8 +80,8 @@ function AppWithReducer() {
         dispatchToTodoLists(action)
     }
 
-    function removeTodoList(id: string) {
-        let action = removeTodoListAC({todoListId: id});
+    function removeTodoList(todoListId: string) {
+        let action = removeTodoListTC.fulfilled({todoListId}, 'requestId', todoListId);
         dispatchToTodoLists(action)
 
     }
