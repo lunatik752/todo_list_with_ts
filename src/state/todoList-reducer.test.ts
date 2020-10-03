@@ -1,9 +1,13 @@
 import {
     todoListReducer,
-    addTodoListAC,
     changeTodoListFilterAC,
     TodoListDomainType,
-    FilterValuesType, changeTodoListEntityStatusAC, fetchTodoListsTC, removeTodoListTC, changeTodoListTitleTC
+    FilterValuesType,
+    changeTodoListEntityStatusAC,
+    fetchTodoListsTC,
+    removeTodoListTC,
+    changeTodoListTitleTC,
+    addTodoListTC
 } from './todoList-reducer';
 import {v1} from 'uuid';
 import {RequestStatusType} from "./app-reducer";
@@ -36,14 +40,13 @@ test('correct todolist should be added', () => {
     let newTodolistTitle = "New Todolist";
 
 
-    const endState = todoListReducer(startState, addTodoListAC({
-        todoList: {
-            id: 'todoListId3',
-            addedDate: '',
-            order: 0,
-            title: newTodolistTitle
-        }
-    }))
+    const todoList = {
+        id: 'todoListId3',
+        addedDate: '',
+        order: 0,
+        title: newTodolistTitle
+    };
+    const endState = todoListReducer(startState, addTodoListTC.fulfilled({todoList}, 'requestId',newTodolistTitle ))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
