@@ -9,7 +9,7 @@ import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    addTodoListAC,
+    addTodoListTC,
     changeTodoListFilterAC, changeTodoListTitleTC,
     FilterValuesType, removeTodoListTC,
     todoListReducer,
@@ -144,15 +144,13 @@ function AppWithReducer() {
     }
 
     function addTodoList(title: string) {
-        const action = addTodoListAC({
-                todoList: {
-                    id: '123',
-                    order: 0,
-                    addedDate: '',
-                    title: title,
-                }
-            }
-        );
+        const todoList = {
+            id: '123',
+            order: 0,
+            addedDate: '',
+            title: title,
+        };
+        const action = addTodoListTC.fulfilled({todoList}, 'requestId', title);
         dispatchToTasks(action);
         dispatchToTodoLists(action)
     }
