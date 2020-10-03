@@ -60,7 +60,7 @@ export const changeTodoListTitleTC = createAsyncThunk('todoLists/changeTodoListT
     }
 })
 
-export const addTodoListTC = createAsyncThunk('todoLists/changeTodoListTitle', async (title: string, {dispatch, rejectWithValue}) => {
+export const addTodoListTC = createAsyncThunk('todoLists/addTodoList', async (title: string, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: "loading"}))
     try {
         const res = await todoListsApi.createTodoList(title);
