@@ -5,7 +5,7 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import {Task} from "../task/Task";
 import {TaskStatuses} from "../../api/tasks-api";
-import {FilterValuesType, TodoListDomainType} from "./todoList-reducer";
+import {FilterValuesType, TodoListDomainType} from "../todoLists/todoList-reducer";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC, TaskDomainType} from "../task/tasks-reducer";
 

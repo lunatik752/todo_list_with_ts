@@ -13,7 +13,7 @@ import {
     changeTodoListFilterAC, changeTodoListTitleTC,
     FilterValuesType, removeTodoListTC,
     todoListReducer,
-} from "../todoList/todoList-reducer";
+} from "../todoLists/todoList-reducer";
 import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../task/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 

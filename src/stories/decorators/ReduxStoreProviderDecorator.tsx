@@ -3,7 +3,7 @@ import React from "react";
 import {AppRootStateType, RootReducerType} from "../../state/store";
 import {combineReducers} from "redux";
 import {tasksReducer} from "../../components/task/tasks-reducer";
-import {todoListReducer} from "../../components/todoList/todoList-reducer";
+import {todoListReducer} from "../../components/todoLists/todoList-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../../api/tasks-api";
 import {appReducer} from "../../components/app/app-reducer";

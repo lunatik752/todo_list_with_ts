@@ -11,13 +11,14 @@ import {
     changeTodoListTitleTC,
     fetchTodoListsTC,
     FilterValuesType,
-    removeTodoListTC,
-    TodoListDomainType
-} from "../todoList/todoList-reducer";
+    removeTodoListTC
+} from "./todoList-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../task/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
 import {TasksStateType} from "../app/AppWithRedux";
 import {Redirect} from "react-router-dom";
+import {authSelectors} from "../../features/login";
+import {todoListsSelectors} from "./index";
 
 type PropsType = {
     demo?: boolean
@@ -25,9 +26,10 @@ type PropsType = {
 
 export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
 
-    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists);
+
+    const todoLists = useSelector(todoListsSelectors.selectTodoList);
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
     const dispatch = useDispatch()
 
 

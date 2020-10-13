@@ -3,7 +3,7 @@ import {AppRootStateType} from "../../state/store";
 import {RequestStatusType, setAppStatusAC} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {addTodoListTC, fetchTodoListsTC, removeTodoListTC} from "../todoList/todoList-reducer";
+import {addTodoListTC, fetchTodoListsTC, removeTodoListTC} from "../todoLists/todoList-reducer";
 
 
 export type TaskDomainType = TaskType & {

@@ -78,7 +78,7 @@ export const addTodoListTC = createAsyncThunk('todoLists/addTodoList', async (ti
 })
 
 const slice = createSlice({
-    name: 'todoList',
+    name: 'todoLists',
     initialState: [] as Array<TodoListDomainType>,
     reducers: {
         changeTodoListFilterAC(state, action: PayloadAction<{ newFilter: FilterValuesType, todoListId: string }>) {
