@@ -4,7 +4,6 @@ import Paper from "@material-ui/core/Paper";
 import {TodoList} from "../todoList/TodoList";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
 import {
     addTodoListTC,
     changeTodoListFilterAC,
@@ -15,10 +14,10 @@ import {
 } from "./todoList-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../task/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
-import {TasksStateType} from "../app/AppWithRedux";
 import {Redirect} from "react-router-dom";
 import {authSelectors} from "../../features/login";
 import {todoListsSelectors} from "./index";
+import {tasksSelectors} from "../task";
 
 type PropsType = {
     demo?: boolean
@@ -28,7 +27,8 @@ export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
 
 
     const todoLists = useSelector(todoListsSelectors.selectTodoList);
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
+
+    const tasks = useSelector(tasksSelectors.selectTasks);
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
     const dispatch = useDispatch()
 
