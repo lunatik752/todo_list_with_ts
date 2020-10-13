@@ -9,8 +9,8 @@ import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
-import {FilterValuesType, TodoListDomainType} from '../../state/todoList-reducer';
-import {TaskDomainType} from "../../state/tasks-reducer";
+import {FilterValuesType, TodoListDomainType} from '../todoList/todoList-reducer';
+import {TaskDomainType} from "../task/tasks-reducer";
 
 
 export type TasksStateType = {

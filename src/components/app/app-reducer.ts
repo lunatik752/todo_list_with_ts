@@ -1,5 +1,5 @@
-import {setIsLoggedInAC} from "../features/login/auth-reducer";
-import {authAPI} from "../api/auth-api";
+import {setIsLoggedInAC} from "../../features/login/auth-reducer";
+import {authAPI} from "../../api/auth-api";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

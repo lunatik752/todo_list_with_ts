@@ -6,13 +6,15 @@ import Container from "@material-ui/core/Container";
 import {ErrorSnackbar} from "../../common/Allert";
 import {TodoLists} from "../todoLists/TodoLists";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
-import {initializeAppTC, RequestStatusType} from "../../state/app-reducer";
-import {BrowserRouter, HashRouter, Route} from 'react-router-dom';
+import {initializeAppTC} from "./app-reducer";
+import {Route} from 'react-router-dom';
 import {Login} from "../../features/login/Login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {logoutTC} from '../../features/login/auth-reducer';
-import {TaskDomainType} from "../../state/tasks-reducer";
+import {TaskDomainType} from "../task/tasks-reducer";
+import { appSelectors } from '.';
+import {authSelectors} from "../../features/login";
+
 
 export type TasksStateType = {
     [key: string]: Array<TaskDomainType>
@@ -26,15 +28,19 @@ type PropsType = {
 export const AppWithRedux = ({demo = false}: PropsType) => {
 
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
+
+    const status = useSelector(appSelectors.selectStatus)
+
+    const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())
     })
 
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+
 
 
     const logoutHandler = () => {

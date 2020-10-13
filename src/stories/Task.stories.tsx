@@ -4,7 +4,7 @@ import {v1} from "uuid";
 import {action} from "@storybook/addon-actions";
 import {Meta} from "@storybook/react/types-6-0";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
-import {TaskDomainType} from "../state/tasks-reducer";
+import {TaskDomainType} from "../components/task/tasks-reducer";
 
 
 export default {

@@ -13,8 +13,8 @@ import {
     FilterValuesType,
     removeTodoListTC,
     TodoListDomainType
-} from "../../state/todoList-reducer";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "../../state/tasks-reducer";
+} from "../todoList/todoList-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "../task/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
 import {TasksStateType} from "../app/AppWithRedux";
 import {Redirect} from "react-router-dom";

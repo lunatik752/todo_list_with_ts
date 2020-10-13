@@ -13,8 +13,8 @@ import {
     changeTodoListFilterAC, changeTodoListTitleTC,
     FilterValuesType, removeTodoListTC,
     todoListReducer,
-} from "../../state/todoList-reducer";
-import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../../state/tasks-reducer";
+} from "../todoList/todoList-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../task/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 
 export type TasksStateType = {

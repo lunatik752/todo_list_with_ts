@@ -4,7 +4,7 @@ import {IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import Checkbox from '@material-ui/core/Checkbox';
 import {TaskStatuses} from "../../api/tasks-api";
-import {TaskDomainType} from "../../state/tasks-reducer";
+import {TaskDomainType} from "./tasks-reducer";
 
 
 type PropsTaskType = {

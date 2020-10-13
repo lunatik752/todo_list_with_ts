@@ -1,4 +1,4 @@
-import {setAppStatusAC} from "../../state/app-reducer";
+import {setAppStatusAC} from "../../components/app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {authAPI, LoginParamsType} from '../../api/auth-api';
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
