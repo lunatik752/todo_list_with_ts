@@ -11,9 +11,11 @@ import Paper from "@material-ui/core/Paper";
 import {
     changeTodoListFilterAC, FilterValuesType, todoListReducer
 } from "../todoLists/todoList-reducer";
-import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../task/tasks-reducer";
+import { tasksReducer} from "../task/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 import {todoListsActions} from '../todoLists/'
+import {tasksActions} from "../task";
+
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -97,12 +99,12 @@ function AppWithReducer() {
 
 
     function removeTask(taskId: string, todoListId: string) {
-        let action = removeTaskTC.fulfilled({taskId, todoListId}, 'requestId', {taskId, todoListId});
+        let action = tasksActions.removeTaskTC.fulfilled({taskId, todoListId}, 'requestId', {taskId, todoListId});
         dispatchToTasks(action)
     }
 
     function addTask(title: string, todoListId: string) {
-        let action = addTaskTC.fulfilled({
+        let action = tasksActions.addTaskTC.fulfilled({
             task: {
                 title: title,
                 status: TaskStatuses.New,
@@ -120,7 +122,7 @@ function AppWithReducer() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        let action = updateTaskTC.fulfilled({taskId: id, domainModel: {status}, todoListId}, 'requestId', {
+        let action = tasksActions.updateTaskTC.fulfilled({taskId: id, domainModel: {status}, todoListId}, 'requestId', {
             taskId: id,
             domainModel: {status},
             todoListId
@@ -154,7 +156,7 @@ function AppWithReducer() {
     }
 
     function changeTitle(id: string, newTitle: string, todoListId: string) {
-        let action = updateTaskTC.fulfilled({
+        let action = tasksActions.updateTaskTC.fulfilled({
             taskId: id,
             domainModel: {title: newTitle},
             todoListId

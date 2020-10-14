@@ -16,7 +16,7 @@ type TasksStateType = {
 }
 
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoListId: string, thunkAPI) => {
+ const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoListId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
     try {
         const res = await tasksAPI.getTasks(todoListId);
@@ -29,7 +29,7 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todoList
     }
 })
 
-export const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: { taskId: string, todoListId: string }, thunkAPI) => {
+ const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: { taskId: string, todoListId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}));
     thunkAPI.dispatch(changeTaskEntityStatusAC({
         todoListId: param.todoListId,
@@ -52,7 +52,7 @@ export const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: {
     }
 })
 
-export const addTaskTC = createAsyncThunk('tasks/addTask', async (param: { todoListId: string, title: string }, thunkAPI) => {
+ const addTaskTC = createAsyncThunk('tasks/addTask', async (param: { todoListId: string, title: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await tasksAPI.createTask(param.todoListId, param.title)
@@ -70,7 +70,7 @@ export const addTaskTC = createAsyncThunk('tasks/addTask', async (param: { todoL
     }
 })
 
-export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: { taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string }, thunkAPI) => {
+ const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: { taskId: string, domainModel: UpdateDomainModelTaskType, todoListId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
     const state = thunkAPI.getState() as AppRootStateType
     const task = state.tasks[param.todoListId].find(t => t.id === param.taskId)
@@ -103,7 +103,7 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: {
     }
 })
 
-export const asyncActions = {
+ const asyncActions = {
     fetchTasksTC,
     removeTaskTC,
     addTaskTC,
