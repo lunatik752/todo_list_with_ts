@@ -9,11 +9,11 @@ import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    changeTodoListFilterAC, FilterValuesType, todoListReducer,
+    changeTodoListFilterAC, FilterValuesType, todoListReducer
 } from "../todoLists/todoList-reducer";
 import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../task/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
-import {addTodoListTC, changeTodoListTitleTC, removeTodoListTC} from "../todoLists/todoList-actions";
+import {todoListsActions} from '../todoLists/'
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -136,7 +136,7 @@ function AppWithReducer() {
     }
 
     function removeTodoList(todoListId: string) {
-        let action = removeTodoListTC.fulfilled({todoListId}, 'requestId', todoListId);
+        let action = todoListsActions.removeTodoListTC.fulfilled({todoListId}, 'requestId', todoListId);
         dispatchToTodoLists(action)
 
     }
@@ -148,7 +148,7 @@ function AppWithReducer() {
             addedDate: '',
             title: title,
         };
-        const action = addTodoListTC.fulfilled({todoList}, 'requestId', title);
+        const action = todoListsActions.addTodoListTC.fulfilled({todoList}, 'requestId', title);
         dispatchToTasks(action);
         dispatchToTodoLists(action)
     }
@@ -164,7 +164,7 @@ function AppWithReducer() {
 
     function changeTodoListTitle(newTitle: string, todoListId: string) {
         const payload = {newTitle: newTitle, todoListId};
-        const action = changeTodoListTitleTC.fulfilled(payload, 'requestId', payload);
+        const action = todoListsActions.changeTodoListTitleTC.fulfilled(payload, 'requestId', payload);
         dispatchToTodoLists(action)
     }
 

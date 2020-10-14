@@ -8,7 +8,7 @@ import Container from "@material-ui/core/Container";
 import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
+import {TaskPriorities, TaskStatuses} from "../../api/tasks-api";
 import {FilterValuesType, TodoListDomainType} from '../todoLists/todoList-reducer';
 import {TaskDomainType} from "../task/tasks-reducer";
 

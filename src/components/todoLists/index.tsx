@@ -1,11 +1,16 @@
 import * as todoListsSelectors from './selectors'
-import * as todoListActions from './todoList-actions'
+import {asyncActions as todoListsAsyncActions, slice} from "./todoList-reducer";
 
 
-export  {
-    todoListsSelectors
+const todoListsActions = {
+    ...todoListsAsyncActions,
+    ...slice.actions
 }
 
 export {
-    todoListActions
+    todoListsActions
+}
+
+export {
+    todoListsSelectors
 }

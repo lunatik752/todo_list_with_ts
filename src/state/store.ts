@@ -6,7 +6,7 @@ import {appReducer} from "../components/app/app-reducer";
 import {authReducer} from "../features/login/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
-import { useMemo } from "react";
+import {useMemo} from "react";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -19,7 +19,7 @@ export type RootReducerType = typeof rootReducer
 
 // export const store = createStore(rootReducer, applyMiddleware(thunk));
 
-export  const store = configureStore({
+export const store = configureStore({
     reducer: rootReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().prepend(thunk)
@@ -33,13 +33,13 @@ window.store = store;
 
 
 type  AppDispatchType = typeof store.dispatch
-export const  useAppDispatch = () => useDispatch<AppDispatchType>()
+export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
 
 export function useActions<T extends ActionCreatorsMapObject<any>>(actions: T) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-
-const boundActions = useMemo(() => {
-    return bindActionCreators(actions, dispatch)
-}, [actions, dispatch])}
+    return useMemo(() => {
+        return bindActionCreators(actions, dispatch)
+    }, [actions, dispatch])
+}
