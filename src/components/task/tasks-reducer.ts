@@ -103,7 +103,7 @@ type TasksStateType = {
     }
 })
 
- const asyncActions = {
+ export const asyncActions = {
     fetchTasksTC,
     removeTaskTC,
     addTaskTC,
