@@ -8,9 +8,7 @@ const todoListsActions = {
 }
 
 export {
-    todoListsActions
-}
-
-export {
+    todoListsActions,
     todoListsSelectors
 }
+

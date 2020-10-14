@@ -103,8 +103,14 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: {
     }
 })
 
+export const asyncActions = {
+    fetchTasksTC,
+    removeTaskTC,
+    addTaskTC,
+    updateTaskTC
+}
 
-const slice = createSlice({
+export const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
     reducers: {
