@@ -9,13 +9,11 @@ import {AddItemForm} from "../../common/AddItemsForm";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    addTodoListTC,
-    changeTodoListFilterAC, changeTodoListTitleTC,
-    FilterValuesType, removeTodoListTC,
-    todoListReducer,
+    changeTodoListFilterAC, FilterValuesType, todoListReducer,
 } from "../todoLists/todoList-reducer";
 import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../task/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
+import {addTodoListTC, changeTodoListTitleTC, removeTodoListTC} from "../todoLists/todoList-actions";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>

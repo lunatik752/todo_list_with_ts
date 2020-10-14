@@ -3,14 +3,11 @@ import {
     changeTodoListFilterAC,
     TodoListDomainType,
     FilterValuesType,
-    changeTodoListEntityStatusAC,
-    fetchTodoListsTC,
-    removeTodoListTC,
-    changeTodoListTitleTC,
-    addTodoListTC
+    changeTodoListEntityStatusAC
 } from './todoList-reducer';
 import {v1} from 'uuid';
 import {RequestStatusType} from "../app/app-reducer";
+import {addTodoListTC, changeTodoListTitleTC, fetchTodoListsTC, removeTodoListTC} from "./todoList-actions";
 
 
 let todolistId1: string;

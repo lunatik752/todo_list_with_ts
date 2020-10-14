@@ -5,12 +5,8 @@ import {TodoList} from "../todoList/TodoList";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addTodoListTC,
     changeTodoListFilterAC,
-    changeTodoListTitleTC,
-    fetchTodoListsTC,
-    FilterValuesType,
-    removeTodoListTC
+    FilterValuesType
 } from "./todoList-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../task/tasks-reducer";
 import {TaskStatuses} from "../../api/tasks-api";
@@ -18,6 +14,7 @@ import {Redirect} from "react-router-dom";
 import {authSelectors} from "../../features/login";
 import {todoListsSelectors} from "./index";
 import {tasksSelectors} from "../task";
+import {addTodoListTC, changeTodoListTitleTC, fetchTodoListsTC, removeTodoListTC} from "./todoList-actions";
 
 type PropsType = {
     demo?: boolean
