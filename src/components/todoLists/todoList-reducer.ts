@@ -25,7 +25,7 @@ export type TodoListDomainType = TodoListType & {
 
  const removeTodoListTC = createAsyncThunk('todoLists/removeTodoList', async (todoListId: string, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: "loading"}))
-    dispatch(changeTodoListEntityStatusAC({todoListId: todoListId, entityStatus: 'loading'}))
+    dispatch(changeTodoListEntityStatus({todoListId: todoListId, entityStatus: 'loading'}))
     try {
         const res = await todoListsApi.deleteTodoList(todoListId);
         if (res.data.resultCode === 0) {
@@ -86,11 +86,11 @@ export  const slice = createSlice({
     name: 'todoLists',
     initialState: [] as Array<TodoListDomainType>,
     reducers: {
-        changeTodoListFilterAC(state, action: PayloadAction<{ newFilter: FilterValuesType, todoListId: string }>) {
+        changeTodoListFilter(state, action: PayloadAction<{ newFilter: FilterValuesType, todoListId: string }>) {
             const index = state.findIndex(tl => tl.id === action.payload.todoListId);
             state[index].filter = action.payload.newFilter;
         },
-        changeTodoListEntityStatusAC(state, action: PayloadAction<{ todoListId: string, entityStatus: RequestStatusType }>) {
+        changeTodoListEntityStatus(state, action: PayloadAction<{ todoListId: string, entityStatus: RequestStatusType }>) {
             const index = state.findIndex(tl => tl.id === action.payload.todoListId);
             state[index].entityStatus = action.payload.entityStatus;
         }
@@ -119,7 +119,7 @@ export  const slice = createSlice({
     }
 })
 
-export const {changeTodoListFilterAC, changeTodoListEntityStatusAC} = slice.actions
+export const {changeTodoListFilter, changeTodoListEntityStatus} = slice.actions
 
 export const todoListReducer = slice.reducer
 
