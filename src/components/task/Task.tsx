@@ -9,8 +9,8 @@ import {TaskDomainType} from "./tasks-reducer";
 
 type PropsTaskType = {
     task: TaskDomainType,
-    removeTask: (id: string, todoListId: string) => void,
-    changeStatus: (id: string, status: TaskStatuses, todoListId: string) => void,
+    removeTask: (params: {taskId: string, todoListId: string}) => void,
+    changeStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void,
     todoListId: string,
     changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void
 }
@@ -19,7 +19,7 @@ export const Task = React.memo(function (props: PropsTaskType) {
 
         console.log("Task called")
 
-    const onClickHandler = () => props.removeTask(props.task.id, props.todoListId)
+    const onClickHandler = () => props.removeTask({taskId: props.task.id, todoListId: props.todoListId})
 
     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
