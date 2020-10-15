@@ -2,13 +2,12 @@ import Grid from "@material-ui/core/Grid";
 import {AddItemForm} from "../../common/AddItemsForm";
 import Paper from "@material-ui/core/Paper";
 import {TodoList} from "../todoList/TodoList";
-import React, {useCallback, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
-import {TaskStatuses} from "../../api/tasks-api";
 import {Redirect} from "react-router-dom";
 import {authSelectors} from "../../features/login";
 import {todoListsActions, todoListsSelectors} from "./index";
-import {tasksActions, tasksSelectors} from "../task";
+import {tasksSelectors} from "../task";
 
 import {useActions} from "../../state/store";
 
@@ -22,8 +21,7 @@ export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
     const todoLists = useSelector(todoListsSelectors.selectTodoList);
     const tasks = useSelector(tasksSelectors.selectTasks);
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
-    const {addTodoListTC, changeTodoListTitleTC, removeTodoListTC, fetchTodoListsTC, changeTodoListFilter} = useActions(todoListsActions)
-    const {addTask, removeTask, updateTask} = useActions(tasksActions)
+    const {addTodoListTC, fetchTodoListsTC} = useActions(todoListsActions)
 
 
     useEffect(() => {
