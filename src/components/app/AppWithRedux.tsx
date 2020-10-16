@@ -5,11 +5,10 @@ import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
 import {ErrorSnackbar} from "../../common/Allert";
 import {TodoLists} from "../todoLists/TodoLists";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Route} from 'react-router-dom';
-import {authSelectors, Login} from "../../features/login";
+import {authActions, authSelectors, Login} from "../../features/login";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {logout} from '../../features/login/auth-reducer';
 import {TaskDomainType} from "../task/tasks-reducer";
 import {appActions, appSelectors} from '.';
 import {useActions} from "../../state/store";
@@ -30,17 +29,14 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
     const status = useSelector(appSelectors.selectStatus)
     const {initializeApp} = useActions(appActions)
+    const {logout} = useActions(authActions)
+
 
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         initializeApp()
     })
-
-    const logoutHandler = () => {
-        dispatch(logout())
-    }
 
 
     if (!isInitialized) {
@@ -62,7 +58,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+                    {isLoggedIn && <Button color="inherit" onClick={logout}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress color='secondary'/>}
             </AppBar>
