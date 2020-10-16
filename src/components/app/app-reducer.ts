@@ -15,7 +15,7 @@ export type InitialAppReducerStateType = {
     isInitialized: boolean
 }
 
-export const initializeAppTC = createAsyncThunk('auth/app', async (param, {dispatch}) => {
+export const initializeApp = createAsyncThunk('auth/app', async (param, {dispatch}) => {
     const res = await authAPI.me()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC({value: true}));
@@ -23,7 +23,7 @@ export const initializeAppTC = createAsyncThunk('auth/app', async (param, {dispa
 })
 
 
-const slice = createSlice({
+export const slice = createSlice({
     name: 'app',
     initialState: {
         status: 'idle',
@@ -31,21 +31,26 @@ const slice = createSlice({
         isInitialized: false
     } as InitialAppReducerStateType,
     reducers: {
-        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+        setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status
         },
-        setAppErrorAC(state, action: PayloadAction<{ error: RequestErrorType }>) {
+        setAppError(state, action: PayloadAction<{ error: RequestErrorType }>) {
             state.error = action.payload.error
         },
     },
     extraReducers: (builder => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
+        builder.addCase(initializeApp.fulfilled, (state) => {
             state.isInitialized = true
         })
     })
 })
 
+export const asyncActions = {
+    initializeApp
+}
+
+
 export const appReducer = slice.reducer;
 
-export const {setAppStatusAC, setAppErrorAC} = slice.actions
+export const {setAppStatus, setAppError} = slice.actions
 

@@ -1,4 +1,4 @@
-import {setAppStatusAC} from "../../components/app/app-reducer";
+import {setAppStatus} from "../../components/app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {authAPI, LoginParamsType} from '../../api/auth-api';
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
@@ -10,11 +10,11 @@ export type InitialAuthReducerStateType = {
 }
 
 export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }}>('auth/login', async (param, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.login(param)
         if (res.data.resultCode === 0) {
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return;
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)
@@ -31,11 +31,11 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValu
 // типизацию logoutTC можно не делать так как этой санкой мы не пользуемся снаружи
 
 export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}));
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.logout()
         if (res.data.resultCode === 0) {
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return;
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)

@@ -1,5 +1,5 @@
 import {todoListsApi, TodoListType} from "../../api/todoLists-api";
-import {RequestStatusType, setAppStatusAC} from "../app/app-reducer";
+import {RequestStatusType, setAppStatus} from "../app/app-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -12,10 +12,10 @@ export type TodoListDomainType = TodoListType & {
 }
 
  const fetchTodoListsTC = createAsyncThunk('todoLists/fetchTodoLists', async (param, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: "loading"}));
+    dispatch(setAppStatus({status: "loading"}));
     try {
         const res = await todoListsApi.getTodoLists();
-        dispatch(setAppStatusAC({status: 'succeeded'}));
+        dispatch(setAppStatus({status: 'succeeded'}));
         return {todoLists: res.data}
     } catch (error) {
         handleServerNetworkError(error, dispatch)
@@ -24,12 +24,12 @@ export type TodoListDomainType = TodoListType & {
 })
 
  const removeTodoListTC = createAsyncThunk('todoLists/removeTodoList', async (todoListId: string, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: "loading"}))
+    dispatch(setAppStatus({status: "loading"}))
     dispatch(changeTodoListEntityStatus({todoListId: todoListId, entityStatus: 'loading'}))
     try {
         const res = await todoListsApi.deleteTodoList(todoListId);
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}))
+            dispatch(setAppStatus({status: 'succeeded'}))
             return {todoListId: todoListId}
         } else {
             handleServerAppError(res.data, dispatch)
@@ -42,11 +42,11 @@ export type TodoListDomainType = TodoListType & {
 })
 
  const changeTodoListTitleTC = createAsyncThunk('todoLists/changeTodoListTitle', async (params: { newTitle: string, todoListId: string }, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: "loading"}))
+    dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoListsApi.updateTodoList(params.todoListId, params.newTitle);
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}))
+            dispatch(setAppStatus({status: 'succeeded'}))
             return {newTitle: params.newTitle, todoListId: params.todoListId}
         } else {
             handleServerAppError(res.data, dispatch)
@@ -59,11 +59,11 @@ export type TodoListDomainType = TodoListType & {
 })
 
  const addTodoListTC = createAsyncThunk('todoLists/addTodoList', async (title: string, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: "loading"}))
+    dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoListsApi.createTodoList(title);
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}))
+            dispatch(setAppStatus({status: 'succeeded'}))
             return {todoList: res.data.data.item}
         } else {
             handleServerAppError(res.data, dispatch)

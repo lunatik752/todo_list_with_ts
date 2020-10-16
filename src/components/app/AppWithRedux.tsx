@@ -6,14 +6,13 @@ import Container from "@material-ui/core/Container";
 import {ErrorSnackbar} from "../../common/Allert";
 import {TodoLists} from "../todoLists/TodoLists";
 import {useDispatch, useSelector} from "react-redux";
-import {initializeAppTC} from "./app-reducer";
 import {Route} from 'react-router-dom';
-import {Login} from "../../features/login/Login";
+import {authSelectors, Login} from "../../features/login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {logoutTC} from '../../features/login/auth-reducer';
 import {TaskDomainType} from "../task/tasks-reducer";
-import { appSelectors } from '.';
-import {authSelectors} from "../../features/login";
+import {appActions, appSelectors} from '.';
+import {useActions} from "../../state/store";
 
 
 export type TasksStateType = {
@@ -28,20 +27,16 @@ type PropsType = {
 export const AppWithRedux = ({demo = false}: PropsType) => {
 
 
-
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
-
     const status = useSelector(appSelectors.selectStatus)
+    const {initializeApp} = useActions(appActions)
 
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        initializeApp()
     })
-
-
-
 
     const logoutHandler = () => {
         dispatch(logoutTC())
