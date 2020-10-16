@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Route} from 'react-router-dom';
 import {authSelectors, Login} from "../../features/login";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {logoutTC} from '../../features/login/auth-reducer';
+import {logout} from '../../features/login/auth-reducer';
 import {TaskDomainType} from "../task/tasks-reducer";
 import {appActions, appSelectors} from '.';
 import {useActions} from "../../state/store";
@@ -39,7 +39,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     })
 
     const logoutHandler = () => {
-        dispatch(logoutTC())
+        dispatch(logout())
     }
 
 

@@ -1,4 +1,4 @@
-import {setIsLoggedInAC} from "../../features/login/auth-reducer";
+import {setIsLoggedIn} from "../../features/login/auth-reducer";
 import {authAPI} from "../../api/auth-api";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -18,7 +18,7 @@ export type InitialAppReducerStateType = {
 export const initializeApp = createAsyncThunk('auth/app', async (param, {dispatch}) => {
     const res = await authAPI.me()
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC({value: true}));
+            dispatch(setIsLoggedIn({value: true}));
         }
 })
 

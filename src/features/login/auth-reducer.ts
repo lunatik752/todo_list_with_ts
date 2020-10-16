@@ -9,7 +9,7 @@ export type InitialAuthReducerStateType = {
     isLoggedIn: boolean
 }
 
-export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }}>('auth/login', async (param, thunkAPI) => {
+export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }}>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.login(param)
@@ -30,7 +30,7 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValu
 
 // типизацию logoutTC можно не делать так как этой санкой мы не пользуемся снаружи
 
-export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.logout()
@@ -47,8 +47,13 @@ export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) 
     }
 })
 
+export const asyncActions = {
+    login,
+    logout
+}
 
-const slice = createSlice({
+
+export const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false
@@ -59,11 +64,11 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state) => {
+        builder.addCase(login.fulfilled, (state) => {
                 state.isLoggedIn = true;
             }
         )
-        builder.addCase(logoutTC.fulfilled, (state) => {
+        builder.addCase(logout.fulfilled, (state) => {
                 state.isLoggedIn = false;
             }
         )
@@ -71,6 +76,7 @@ const slice = createSlice({
 })
 
 
+
 export const authReducer = slice.reducer;
 
-export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
+export const setIsLoggedIn = slice.actions.setIsLoggedInAC

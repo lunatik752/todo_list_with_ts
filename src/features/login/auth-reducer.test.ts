@@ -1,4 +1,4 @@
-import {authReducer, setIsLoggedInAC, InitialAuthReducerStateType} from "./auth-reducer";
+import {authReducer, setIsLoggedIn, InitialAuthReducerStateType} from "./auth-reducer";
 
 
 let startState: InitialAuthReducerStateType;
@@ -11,7 +11,7 @@ beforeEach(() => {
 
 test('isLoggedIn should be changed', () => {
 
-    const action = setIsLoggedInAC({value: true});
+    const action = setIsLoggedIn({value: true});
     const endState = authReducer(startState, action)
 
     expect(endState.isLoggedIn).toBe(true);
