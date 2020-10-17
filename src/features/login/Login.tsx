@@ -4,8 +4,8 @@ import {useSelector} from "react-redux";
 import {Redirect} from 'react-router-dom';
 import {FormikHelpers, useFormik} from "formik";
 import {login} from "./auth-reducer";
-import {useAppDispatch} from "../../state/store";
-import {AppRootStateType} from "../../state/store";
+import {AppRootStateType, useAppDispatch} from "../../state/store";
+import {authActions} from "./index";
 
 
 type FormValuesType = {
@@ -15,6 +15,7 @@ type FormValuesType = {
 }
 
 export const Login = () => {
+
 
     type FormErrorType = {
         email: string
@@ -49,7 +50,7 @@ export const Login = () => {
         },
         validate,
         onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const action = await dispatch(login(values));
+            const action = await dispatch(authActions.login(values));
             if (login.rejected.match(action)) {
                 if (action.payload?.fieldsErrors?.length) {
                     const error = action.payload.fieldsErrors[0]
