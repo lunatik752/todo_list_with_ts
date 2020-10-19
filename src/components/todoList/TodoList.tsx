@@ -20,17 +20,8 @@ type PropsType = {
 
 export const TodoList = React.memo(function ({demo = false, ...props}: PropsType) {
 
-        const {fetchTasks, addTask, removeTask, updateTask} = useActions(tasksActions)
+        const {fetchTasks, addTask} = useActions(tasksActions)
         const {changeTodoListFilter, removeTodoListTC, changeTodoListTitleTC} = useActions(todoListsActions)
-
-
-        const changeTaskStatus = useCallback(function (taskId: string, status: TaskStatuses, todoListId: string) {
-            updateTask({taskId, domainModel: {status}, todoListId})
-        }, [updateTask])
-
-        const changeTaskTitle = useCallback(function (taskId: string, newTitle: string, todoListId: string) {
-            updateTask({taskId, domainModel: {title: newTitle}, todoListId})
-        }, [updateTask])
 
         const addTaskCallback = useCallback((title: string) => {
             addTask({todoListId: props.todoList.id, title: title});
@@ -68,8 +59,8 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         const renderFilterButton = (
             buttonFilter: FilterValuesType,
-                                    color: PropTypes.Color,
-                                    text: string) => {
+            color: PropTypes.Color,
+            text: string) => {
             return <Button variant={props.todoList.filter === buttonFilter ? 'outlined' : 'text'}
                            onClick={() => {
                                onFilterButtonClickHandler(buttonFilter);
@@ -90,9 +81,8 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             <div>
                 {tasksForTodoList.map(task => <Task
                     key={task.id}
-                    task={task} removeTask={removeTask}
-                    changeStatus={changeTaskStatus} todoListId={props.todoList.id}
-                    changeTaskTitle={changeTaskTitle}/>)}
+                    task={task}
+                    todoListId={props.todoList.id}/>)}
             </div>
             <div>
                 {renderFilterButton("all", "default", 'All')}
