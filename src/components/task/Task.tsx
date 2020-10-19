@@ -18,24 +18,20 @@ export const Task = React.memo(function (props: PropsTaskType) {
 
         const {updateTask, removeTask} = useActions(tasksActions)
 
-
-        const changeTaskStatus = useCallback(function (taskId: string, status: TaskStatuses, todoListId: string) {
-            updateTask({taskId, domainModel: {status}, todoListId})
-        }, [updateTask])
-
-        const changeTaskTitle = useCallback(function (taskId: string, newTitle: string, todoListId: string) {
-            updateTask({taskId, domainModel: {title: newTitle}, todoListId})
-        }, [updateTask])
-
         const onClickHandler = () => removeTask({taskId: props.task.id, todoListId: props.todoListId})
 
         const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             let newIsDoneValue = e.currentTarget.checked;
-            changeTaskStatus(props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, props.todoListId)
+            updateTask({taskId: props.task.id,
+            domainModel: {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New},
+            todoListId: props.todoListId})
         }
+
         const onChangeTitleHandler = useCallback((newtTitle: string) => {
-            changeTaskTitle(props.task.id, newtTitle, props.todoListId)
-        }, [changeTaskTitle, props.task.id, props.todoListId])
+            updateTask({taskId: props.task.id,
+                domainModel: {title: newtTitle},
+                todoListId: props.todoListId})
+        }, [updateTask, props.task.id, props.todoListId])
 
         const disabled = props.task.entityTaskStatus === 'loading'
 
