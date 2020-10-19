@@ -70,15 +70,18 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             </Button>
         }
 
-        return <div>
+        return <div style={{position: 'relative'}}>
             <div className={'todoListTitle'}>
-                <h3><EditableSpan title={props.todoList.title} onChangeTitle={changeTodoListTitle}/></h3>
-                <IconButton onClick={removeTodoList} disabled={props.todoList.entityStatus === 'loading'}>
+                <IconButton  style={{position: 'absolute', right: '5px', top: '7px'}} onClick={removeTodoList} disabled={props.todoList.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
+                <h3><EditableSpan title={props.todoList.title} onChangeTitle={changeTodoListTitle}/></h3>
+
             </div>
             <AddItemForm addItem={addTaskCallback} disabled={props.todoList.entityStatus === 'loading'}/>
             <div>
+
+                { !tasksForTodoList.length && <div style={{padding: '10px', color: 'gray'}}>No tasks</div>}
                 {tasksForTodoList.map(task => <Task
                     key={task.id}
                     task={task}
