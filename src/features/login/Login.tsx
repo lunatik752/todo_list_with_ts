@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import {FormikHelpers, useFormik} from "formik";
 import {login} from "./auth-reducer";
 import {AppRootStateType, useAppDispatch} from "../../state/store";
-import {authActions} from "./index";
+import {authActions, authSelectors} from "./index";
 
 
 type FormValuesType = {
@@ -25,7 +25,7 @@ export const Login = () => {
     }
 
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(authSelectors.selectIsLoggedIn);
     const dispatch = useAppDispatch()
 
     const validate = (values: FormErrorType) => {
