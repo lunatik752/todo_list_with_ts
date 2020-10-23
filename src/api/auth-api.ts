@@ -1,24 +1,5 @@
 import axios from 'axios'
-
-export type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors?: Array<{ field: string, error: string }>
-    data: D
-}
-
-type AuthResponseDataType = {
-    id: number
-    email: string
-    login: string
-}
-
-export type LoginParamsType = {
-     email: string
-     password: string
-     rememberMe: boolean
-     captcha?: string
- }
+import {AuthResponseDataType, LoginParamsType, ResponseType} from "./types";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',

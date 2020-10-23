@@ -1,19 +1,5 @@
 import axios from 'axios'
-
-export type TodoListType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
-
-export type FieldErrorType = { field: string, error: string };
-export type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors?: Array<FieldErrorType>
-    data: D
-}
+import {ResponseType, TodoListType} from "./types";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',

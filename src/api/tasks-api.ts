@@ -1,53 +1,5 @@
 import axios from 'axios'
-
-export enum TaskStatuses {
-    New,
-    InProgress,
-    Completed,
-    Draft
-}
-
-export enum TaskPriorities {
-    Low,
-    Middle,
-    Hi,
-    Urgently,
-    Later
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-type UpdateModelTaskType = {
-    title: string
-    description: string
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-}
-
-type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    data: D
-}
-
-type GetTasksResponseType = {
-    items: Array<TaskType>
-    totalCount: number
-    error: string
-}
+import {GetTasksResponseType, ResponseType, TaskType, UpdateModelTaskType} from "./types";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1//todo-lists/',
@@ -79,4 +31,4 @@ export const tasksAPI = {
             instance.put<ResponseType>(`${todolistId}/tasks/${taskId}`,  modelTask)
         return promise
     }
-} 
+}
