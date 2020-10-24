@@ -37,6 +37,7 @@ export type GetTasksResponseType = {
     totalCount: number
     error: string
 }
+export type FieldErrorType = { field: string, error: string };
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
@@ -49,7 +50,7 @@ export type TodoListType = {
     order: number
     title: string
 }
-export type FieldErrorType = { field: string, error: string };
+
 
 export enum TaskStatuses {
     New,
