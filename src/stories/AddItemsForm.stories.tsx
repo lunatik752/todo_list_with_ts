@@ -1,19 +1,22 @@
 import {AddItemForm} from "../common/AddItemsForm";
 import React from "react";
 import {action} from "@storybook/addon-actions";
-import {Meta} from "@storybook/react/types-6-0";
 
 
 export default  {
     title: 'Example/AddItemForm Stories',
     component: AddItemForm
-} as Meta
+}
+
+const asyncCallback = async (...params: any[]) => {
+    action('Button inside form clicked')(...params);
+}
 
 export const AddItemFormBaseExample = (props: any) => {
-    return <AddItemForm addItem={action('Button inside from clicked')} disabled={false}/>
+    return <AddItemForm addItem={asyncCallback}/>
 }
 
 
 export const AddItemFormDisabledExample = (props: any) => {
-    return <AddItemForm addItem={action('Button inside from clicked')} disabled={true}/>
+    return <AddItemForm addItem={asyncCallback}/>
 }

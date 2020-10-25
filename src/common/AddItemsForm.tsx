@@ -4,20 +4,24 @@ import {AddBox} from "@material-ui/icons";
 
 
 type AddItemPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => Promise<any>
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo(function ({addItem, disabled = false}: AddItemPropsType)  {
+export const AddItemForm = React.memo(function ({addItem, disabled = false}: AddItemPropsType) {
     console.log("AddItemForm called")
 
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null)
 
-    const addItemHandler = () => {
+    const addItemHandler = async  () => {
         if (title.trim() !== '') {
-            addItem(title);
-            setTitle('')
+            try {
+              await addItem(title);
+                setTitle('')
+            } catch (error) {
+                setError(error)
+            }
         } else {
             setError('Title is required')
         }
@@ -28,7 +32,7 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-       if (error !== null) {
+        if (error !== null) {
             setError(null)
         }
         if (e.charCode === 13) {

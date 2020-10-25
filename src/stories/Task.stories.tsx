@@ -2,9 +2,9 @@ import React from "react";
 import {Task} from "../components/task/Task";
 import {v1} from "uuid";
 import {Meta} from "@storybook/react/types-6-0";
-import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 import {TaskDomainType} from "../components/task/tasks-reducer";
 import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecorator";
+import {TaskPriorities, TaskStatuses} from "../api/types";
 
 
 export default {
