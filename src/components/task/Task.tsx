@@ -3,10 +3,10 @@ import {EditableSpan} from "../../common/EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import Checkbox from '@material-ui/core/Checkbox';
-import {TaskStatuses} from "../../api/tasks-api";
 import {TaskDomainType} from "./tasks-reducer";
-import {useActions} from "../../state/store";
 import {tasksActions} from "./index";
+import {useActions} from "../../utils/redux-utils";
+import {TaskStatuses} from "../../api/types";
 
 
 type PropsTaskType = {
@@ -18,7 +18,8 @@ export const Task = React.memo(function (props: PropsTaskType) {
 
         const {updateTask, removeTask} = useActions(tasksActions)
 
-        const onClickHandler = () => removeTask({taskId: props.task.id, todoListId: props.todoListId})
+        const onClickHandler =  useCallback(() => removeTask({taskId: props.task.id, todoListId: props.todoListId}),
+            [removeTask, props.task.id, props.todoListId])
 
         const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             let newIsDoneValue = e.currentTarget.checked;
