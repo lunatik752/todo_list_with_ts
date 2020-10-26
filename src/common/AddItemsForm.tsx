@@ -5,7 +5,7 @@ import {AddBox} from "@material-ui/icons";
 export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void}
 
 type AddItemPropsType = {
-    addItem: (title: string) => Promise<any>
+    addItem: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
 }
 
@@ -17,12 +17,7 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
 
     const addItemHandler = async  () => {
         if (title.trim() !== '') {
-            try {
-              await addItem(title);
-                setTitle('')
-            } catch (error) {
-                setError(error)
-            }
+            addItem(title, {setError, setTitle})
         } else {
             setError('Title is required')
         }

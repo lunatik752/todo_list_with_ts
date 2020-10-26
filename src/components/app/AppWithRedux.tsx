@@ -11,7 +11,7 @@ import {authActions, authSelectors, Login} from "../../features/login";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {TaskDomainType} from "../task/tasks-reducer";
 import {appActions, appSelectors} from '.';
-import {useActions} from "../../state/store";
+import {useActions} from "../../utils/redux-utils";
 
 
 export type TasksStateType = {

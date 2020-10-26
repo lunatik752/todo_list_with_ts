@@ -2,14 +2,14 @@ import Grid from "@material-ui/core/Grid";
 import {AddItemForm} from "../../common/AddItemsForm";
 import Paper from "@material-ui/core/Paper";
 import {TodoList} from "../todoList/TodoList";
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {authSelectors} from "../../features/login";
 import {todoListsActions, todoListsSelectors} from "./index";
 import {tasksSelectors} from "../task";
 
-import {useActions} from "../../state/store";
+import {useActions} from "../../utils/redux-utils";
 
 type PropsType = {
     demo?: boolean
@@ -31,6 +31,9 @@ export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
         fetchTodoListsTC()
     }, [demo, fetchTodoListsTC, isLoggedIn])
 
+    const addTodoListCallback = useCallback(async  (title: string) => {
+        addTodoListTC(title);
+    }, [addTodoListTC])
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
@@ -38,7 +41,7 @@ export const TodoLists: React.FC<PropsType> = ({demo = false}) => {
 
     return <>
         <Grid container style={{padding: "20px"}}>
-            <AddItemForm addItem={addTodoListTC}/>
+            <AddItemForm addItem={addTodoListCallback}/>
         </Grid>
 
         <Grid container spacing={3} style={{flexWrap: 'nowrap',  overflowX: 'scroll'}}>{

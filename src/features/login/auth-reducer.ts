@@ -1,15 +1,15 @@
 import {setAppStatus} from "../../components/app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {authAPI, LoginParamsType} from '../../api/auth-api';
+import {authAPI} from '../../api/auth-api';
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
-import {FieldErrorType} from "../../api/todoLists-api";
+import {FieldErrorType, LoginParamsType} from "../../api/types";
 
 export type InitialAuthReducerStateType = {
     isLoggedIn: boolean
 }
 
-export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }}>('auth/login', async (param, thunkAPI) => {
+export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> } }>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.login(param)
@@ -17,12 +17,12 @@ export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue:
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return;
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch)
+            handleServerAppError(res.data, thunkAPI)
             return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (err) {
         const error: AxiosError = err
-        handleServerNetworkError(error, thunkAPI.dispatch)
+        handleServerNetworkError(error, thunkAPI)
         return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
 
     }
@@ -38,11 +38,11 @@ export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) =>
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return;
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch)
+            handleServerAppError(res.data, thunkAPI)
             return thunkAPI.rejectWithValue({})
         }
     } catch (error) {
-        handleServerNetworkError(error, thunkAPI.dispatch)
+        handleServerNetworkError(error, thunkAPI)
         return thunkAPI.rejectWithValue({})
     }
 })
@@ -74,7 +74,6 @@ export const slice = createSlice({
         )
     }
 })
-
 
 
 export const authReducer = slice.reducer;

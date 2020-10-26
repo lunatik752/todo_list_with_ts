@@ -1,6 +1,6 @@
 
 import {rootReducer, store} from "../state/store";
-import { FieldErrorType } from "../api/todoLists-api";
+import {FieldErrorType} from "../api/types";
 
 
 // redux common types

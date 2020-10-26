@@ -4,8 +4,9 @@ import {useSelector} from "react-redux";
 import {Redirect} from 'react-router-dom';
 import {FormikHelpers, useFormik} from "formik";
 import {login} from "./auth-reducer";
-import {AppRootStateType, useAppDispatch} from "../../state/store";
+import {AppRootStateType} from "../../state/store";
 import {authActions, authSelectors} from "./index";
+import {useAppDispatch} from "../../utils/redux-utils";
 
 
 type FormValuesType = {
