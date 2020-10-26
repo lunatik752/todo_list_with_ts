@@ -40,9 +40,6 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             }
         }, [dispatch, props.todoList.id])
 
-        const onFilterButtonClickHandler = useCallback((buttonFilter: FilterValuesType) => {
-            changeTodoListFilter({newFilter: buttonFilter, todoListId: props.todoList.id})
-        }, [changeTodoListFilter, props.todoList.id]);
 
         const removeTodoList = () => {
             removeTodoListTC(props.todoList.id)
@@ -51,6 +48,10 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
         const changeTodoListTitle = useCallback((newtTitle: string) => {
             changeTodoListTitleTC({newTitle: newtTitle, todoListId: props.todoList.id})
         }, [changeTodoListTitleTC, props.todoList.id]);
+
+        const onFilterButtonClickHandler = useCallback((buttonFilter: FilterValuesType) => {
+            changeTodoListFilter({newFilter: buttonFilter, todoListId: props.todoList.id})
+        }, [changeTodoListFilter, props.todoList.id]);
 
         let tasksForTodoList = props.tasks;
 

@@ -3,6 +3,7 @@ import {RequestStatusType, setAppStatus} from "../app/app-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {TodoListType} from "../../api/types";
+import {ThunkError} from "../../utils/types";
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -59,7 +60,7 @@ export type TodoListDomainType = TodoListType & {
     }
 })
 
- const addTodoListTC = createAsyncThunk('todoLists/addTodoList', async (title: string, thunkAPI ) => {
+ const addTodoListTC = createAsyncThunk<{ todoList: TodoListType }, string, ThunkError>('todoLists/addTodoList', async (title: string, thunkAPI ): Promise<any> => {
      thunkAPI.dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoListsApi.createTodoList(title);
@@ -67,12 +68,10 @@ export type TodoListDomainType = TodoListType & {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return {todoList: res.data.data.item}
         } else {
-            handleServerAppError(res.data, thunkAPI)
-            return thunkAPI.rejectWithValue(null)
+            return handleServerAppError(res.data, thunkAPI, false)
         }
     } catch (error) {
-        handleServerNetworkError(error, thunkAPI)
-        return thunkAPI.rejectWithValue(null)
+       return  handleServerNetworkError(error, thunkAPI, false)
     }
 })
 
