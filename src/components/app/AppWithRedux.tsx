@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import './App.css';
 import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import Container from "@material-ui/core/Container";
-import {ErrorSnackbar} from "../../common/Allert";
+import {ErrorSnackbar} from "../../common/Alert";
 import {TodoLists} from "../todoLists/TodoLists";
 import {useSelector} from "react-redux";
 import {Route} from 'react-router-dom';
@@ -35,9 +35,14 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
 
     useEffect(() => {
-        initializeApp()
-    })
+        if (!demo) {
+            initializeApp()
+        }
+    }, [initializeApp])
 
+    const logoutHandler = useCallback(() => {
+        logout()
+    }, [logout])
 
     if (!isInitialized) {
         return <div
@@ -58,7 +63,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {isLoggedIn && <Button color="inherit" onClick={logout}>Log out</Button>}
+                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress color='secondary'/>}
             </AppBar>
