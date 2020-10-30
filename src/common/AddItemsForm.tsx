@@ -2,19 +2,19 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
-export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void}
+export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void }
 
-type AddItemPropsType = {
+type AddItemFormPropsType = {
     addItem: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo(function ({addItem, disabled = false}: AddItemPropsType) {
+export const AddItemForm = React.memo(function ({addItem, disabled = false}: AddItemFormPropsType) {
 
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null)
 
-    const addItemHandler = async  () => {
+    const addItemHandler = async () => {
         if (title.trim() !== '') {
             addItem(title, {setError, setTitle})
         } else {
@@ -37,16 +37,19 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
 
     return (
         <div>
-            <TextField variant='outlined'
+            <TextField variant="outlined"
+                       disabled={disabled}
+                       error={!!error}
                        value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
-                       error={!!error}
                        label="Title"
                        helperText={error}
-                       disabled={disabled}
             />
-            <IconButton color='primary' onClick={addItemHandler} disabled={disabled} style={{marginLeft: '10px'}}>
+            <IconButton color='primary'
+                        onClick={addItemHandler}
+                        disabled={disabled}
+                        style={{marginLeft: '10px'}}>
                 <AddBox/>
             </IconButton>
         </div>)
