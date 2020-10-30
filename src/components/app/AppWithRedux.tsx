@@ -38,7 +38,7 @@ export const AppWithRedux = ({demo = false}: PropsType) => {
         if (!demo) {
             initializeApp()
         }
-    }, [initializeApp])
+    }, [demo, initializeApp])
 
     const logoutHandler = useCallback(() => {
         logout()

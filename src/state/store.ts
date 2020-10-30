@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 import {appReducer} from "../components/app/app-reducer";
 import {authReducer} from "../features/login/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
-import {RootReducerType} from "../utils/types";
 
 export const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -21,8 +20,6 @@ export const store = configureStore({
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().prepend(thunk)
 })
-
-export type AppRootStateType = ReturnType<RootReducerType>
 
 
 // @ts-ignore
