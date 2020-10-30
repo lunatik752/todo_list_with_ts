@@ -123,7 +123,6 @@ export  const slice = createSlice({
 
 export const {changeTodoListFilter, changeTodoListEntityStatus} = slice.actions
 
-export const todoListReducer = slice.reducer
 
 
 

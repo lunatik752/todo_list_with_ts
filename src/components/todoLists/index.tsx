@@ -1,16 +1,17 @@
 import * as todoListsSelectors from './selectors'
-import {asyncActions as todoListsAsyncActions, slice} from "./todoList-reducer";
-
+import {asyncActions as todoListsAsyncActions, slice as todoListsSlice} from "./todoList-reducer";
 
 
 const todoListsActions = {
     ...todoListsAsyncActions,
-    ...slice.actions
+    ...todoListsSlice.actions
 }
+
+const todoListsReducer  = todoListsSlice.reducer
 
 export {
     todoListsActions,
     todoListsSelectors,
-
+    todoListsReducer
 }
 

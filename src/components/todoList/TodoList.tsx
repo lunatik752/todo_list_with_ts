@@ -1,15 +1,16 @@
 import React, {useCallback, useEffect} from "react";
 import {AddItemForm, AddItemFormSubmitHelperType} from "../../common/AddItemsForm";
 import {EditableSpan} from "../../common/EditableSpan";
-import {Button, IconButton, PropTypes} from "@material-ui/core";
+import {Button, IconButton, PropTypes, Paper} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
 import {Task} from "../task/Task";
 import {FilterValuesType, TodoListDomainType} from "../todoLists/todoList-reducer";
 import {TaskDomainType} from "../task/tasks-reducer";
-import {tasksActions} from "../task";
-import {todoListsActions} from "../todoLists";
 import {useActions, useAppDispatch} from "../../utils/redux-utils";
 import {TaskStatuses} from "../../api/types";
+import { tasksActions } from "../task";
+import { todoListsActions } from "../todoLists";
+
 
 
 type PropsType = {
@@ -27,10 +28,10 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
 
         const addTaskCallback = useCallback(async (title: string, helper: AddItemFormSubmitHelperType) => {
             let thunk = tasksActions.addTask({title: title, todoListId: props.todoList.id,});
-            const resultAction = await dispatch(thunk);
+            const resultAction = await dispatch(thunk)
             if (tasksActions.addTask.rejected.match(resultAction)) {
                 if (resultAction.payload?.errors?.length) {
-                    const error = resultAction.payload.errors[0]
+                    const error = resultAction.payload?.errors[0]
                     helper.setError(error)
                 } else {
                     helper.setError('Some error occurred')
@@ -84,7 +85,7 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
             </Button>
         }
 
-        return <div style={{position: 'relative'}}>
+        return <Paper style={{position: 'relative'}}>
             <div className={'todoListTitle'}>
                 <IconButton style={{position: 'absolute', right: '5px', top: '7px'}} onClick={removeTodoList}
                             disabled={props.todoList.entityStatus === 'loading'}>
@@ -107,6 +108,6 @@ export const TodoList = React.memo(function ({demo = false, ...props}: PropsType
                 {renderFilterButton("active", "primary", 'Active')}
                 {renderFilterButton("completed", "secondary", 'Completed')}
             </div>
-        </div>
+        </Paper>
     }
 )
