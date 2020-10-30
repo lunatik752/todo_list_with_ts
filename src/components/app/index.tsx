@@ -1,14 +1,19 @@
 import * as appSelectors from './selectors'
-import {asyncActions as appAsyncActions, slice} from "./app-reducer";
+import {asyncActions as appAsyncActions, slice, RequestStatusType as T1} from "./app-reducer";
 
+
+const appReducer = slice.reducer
+const actions = slice.actions
 
 const appActions = {
     ...appAsyncActions,
-    ...slice.actions
+    ...actions
 }
 
+export type RequestStatusType = T1
 
 export {
     appSelectors,
-    appActions
+    appActions,
+    appReducer
 }

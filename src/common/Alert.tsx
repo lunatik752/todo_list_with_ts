@@ -19,7 +19,7 @@ export function ErrorSnackbar() {
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
-
+            return
         }
         setAppError({error: null})
     }

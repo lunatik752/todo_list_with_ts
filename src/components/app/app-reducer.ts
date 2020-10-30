@@ -17,7 +17,7 @@ export type InitialAppReducerStateType = {
     isInitialized: boolean
 }
 
-export const initializeApp = createAsyncThunk('auth/app', async (param, {dispatch}) => {
+const initializeApp = createAsyncThunk('auth/app', async (param, {dispatch}) => {
     const res = await authAPI.me()
         if (res.data.resultCode === 0) {
             dispatch(authActions.setIsLoggedIn({value: true}));
@@ -33,9 +33,9 @@ export const slice = createSlice({
         isInitialized: false
     } as InitialAppReducerStateType,
     reducers: {},
-    extraReducers: (builder => {
+    extraReducers: builder => {
         builder
-            .addCase(initializeApp.fulfilled, (state) => {
+            .addCase(initializeApp.fulfilled, (state,action) => {
             state.isInitialized = true
         })
             .addCase(appActions.setAppStatus, (state, action) => {
@@ -44,7 +44,7 @@ export const slice = createSlice({
             .addCase(appActions.setAppError, (state, action) => {
                 state.error = action.payload.error
             })
-    })
+    }
 })
 
 export const asyncActions = {
@@ -52,6 +52,6 @@ export const asyncActions = {
 }
 
 
-export const appReducer = slice.reducer;
+
 
 

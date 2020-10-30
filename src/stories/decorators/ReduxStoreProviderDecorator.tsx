@@ -4,13 +4,13 @@ import {combineReducers} from "redux";
 import {tasksReducer} from "../../components/task/tasks-reducer";
 import {todoListReducer} from "../../components/todoLists/todoList-reducer";
 import {v1} from "uuid";
-import {appReducer} from "../../components/app/app-reducer";
 import thunk from "redux-thunk";
 import {authReducer} from "../../features/login/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {HashRouter} from "react-router-dom";
 import {AppRootStateType, RootReducerType} from "../../utils/types";
 import {TaskPriorities, TaskStatuses} from "../../api/types";
+import { appReducer } from "../../components/app";
 
 const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,
