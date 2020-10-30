@@ -6,23 +6,19 @@ import { appActions } from '../CommonActions/App';
 
 const {setAppStatus} = appActions
 
-export type InitialAuthReducerStateType = {
-    isLoggedIn: boolean
-}
-
 export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> } }>('auth/login', async (param, thunkAPI): Promise<any> => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.login(param)
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
-            return;
+            return
         } else {
-            handleServerAppError(res.data, thunkAPI)
+          return   handleServerAppError(res.data, thunkAPI)
 
         }
     } catch (error) {
-        handleServerNetworkError(error, thunkAPI)
+       return  handleServerNetworkError(error, thunkAPI)
     }
 })
 
@@ -59,12 +55,13 @@ export const slice = createSlice({
             state.isLoggedIn = action.payload.value;
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(login.fulfilled, (state) => {
+    extraReducers: builder => {
+        builder
+            .addCase(login.fulfilled, (state) => {
                 state.isLoggedIn = true;
             }
         )
-        builder.addCase(logout.fulfilled, (state) => {
+        .addCase(logout.fulfilled, (state) => {
                 state.isLoggedIn = false;
             }
         )
