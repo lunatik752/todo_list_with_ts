@@ -70,7 +70,8 @@ export type TodoListDomainType = TodoListType & {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return {todoList: res.data.data.item}
         } else {
-            return handleServerAppError(res.data, thunkAPI, false)
+             handleServerAppError(res.data, thunkAPI, false)
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (error) {
        return  handleServerNetworkError(error, thunkAPI, false)
